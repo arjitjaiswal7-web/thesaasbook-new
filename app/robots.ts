@@ -9,11 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/_next/", "/api/"],
     },
-    sitemap: [
-      absoluteUrl("/sitemaps/pages.xml"),
-      absoluteUrl("/sitemaps/tools.xml"),
-      absoluteUrl("/sitemaps/blog.xml"),
-    ],
+    sitemap: absoluteUrl("/sitemap.xml"),
     host: siteConfig.siteUrl,
   };
 }

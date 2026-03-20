@@ -1,6 +1,6 @@
 import { buildSitemapXml, getBlogSitemapEntries } from "@/lib/sitemaps";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   const entries = await getBlogSitemapEntries();

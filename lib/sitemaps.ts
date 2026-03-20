@@ -21,6 +21,11 @@ export type SitemapEntry = {
   priority: number;
 };
 
+export type SitemapIndexEntry = {
+  url: string;
+  lastModified: string;
+};
+
 type StaticRouteConfig = {
   route: string;
   sources: string[];
@@ -111,6 +116,28 @@ export function buildSitemapXml(entries: SitemapEntry[]) {
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;
+}
+
+export function buildSitemapIndexXml(entries: SitemapIndexEntry[]) {
+  const sitemaps = entries
+    .map(
+      (entry) => `  <sitemap>\n    <loc>${escapeXml(entry.url)}</loc>\n    <lastmod>${entry.lastModified}</lastmod>\n  </sitemap>`,
+    )
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemaps}\n</sitemapindex>`;
+}
+
+function getLatestEntryTimestamp(entries: SitemapEntry[]) {
+  if (!entries.length) {
+    return new Date().toISOString();
+  }
+
+  return entries.reduce((latest, entry) =>
+    new Date(entry.lastModified).getTime() > new Date(latest).getTime()
+      ? entry.lastModified
+      : latest,
+  entries[0].lastModified);
 }
 
 export async function getPagesSitemapEntries(): Promise<SitemapEntry[]> {
@@ -221,5 +248,28 @@ export async function getBlogSitemapEntries(): Promise<SitemapEntry[]> {
       priority: 0.8,
     },
     ...postEntries,
+  ];
+}
+
+export async function getSitemapIndexEntries(): Promise<SitemapIndexEntry[]> {
+  const [pagesEntries, toolsEntries, blogEntries] = await Promise.all([
+    getPagesSitemapEntries(),
+    getToolsSitemapEntries(),
+    getBlogSitemapEntries(),
+  ]);
+
+  return [
+    {
+      url: absoluteUrl("/sitemaps/pages.xml"),
+      lastModified: getLatestEntryTimestamp(pagesEntries),
+    },
+    {
+      url: absoluteUrl("/sitemaps/tools.xml"),
+      lastModified: getLatestEntryTimestamp(toolsEntries),
+    },
+    {
+      url: absoluteUrl("/sitemaps/blog.xml"),
+      lastModified: getLatestEntryTimestamp(blogEntries),
+    },
   ];
 }
