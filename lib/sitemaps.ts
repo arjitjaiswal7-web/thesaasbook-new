@@ -96,6 +96,20 @@ function escapeXml(value: string) {
     .replace(/'/g, "&apos;");
 }
 
+function ensureWwwUrl(value: string) {
+  try {
+    const url = new URL(value);
+
+    if (url.hostname === "thesaasbook.com") {
+      url.hostname = "www.thesaasbook.com";
+    }
+
+    return url.toString();
+  } catch {
+    return value;
+  }
+}
+
 async function getLastModified(...sources: string[]) {
   const timestamps = await Promise.all(
     sources.map(async (source) => {
@@ -111,7 +125,7 @@ async function getLastModified(...sources: string[]) {
 export function buildSitemapXml(entries: SitemapEntry[]) {
   const urls = entries
     .map(
-      (entry) => `  <url>\n    <loc>${escapeXml(entry.url)}</loc>\n    <lastmod>${entry.lastModified}</lastmod>\n    <changefreq>${entry.changeFrequency}</changefreq>\n    <priority>${entry.priority.toFixed(1)}</priority>\n  </url>`,
+      (entry) => `  <url>\n    <loc>${escapeXml(ensureWwwUrl(entry.url))}</loc>\n    <lastmod>${entry.lastModified}</lastmod>\n    <changefreq>${entry.changeFrequency}</changefreq>\n    <priority>${entry.priority.toFixed(1)}</priority>\n  </url>`,
     )
     .join("\n");
 
@@ -121,7 +135,7 @@ export function buildSitemapXml(entries: SitemapEntry[]) {
 export function buildSitemapIndexXml(entries: SitemapIndexEntry[]) {
   const sitemaps = entries
     .map(
-      (entry) => `  <sitemap>\n    <loc>${escapeXml(entry.url)}</loc>\n    <lastmod>${entry.lastModified}</lastmod>\n  </sitemap>`,
+      (entry) => `  <sitemap>\n    <loc>${escapeXml(ensureWwwUrl(entry.url))}</loc>\n    <lastmod>${entry.lastModified}</lastmod>\n  </sitemap>`,
     )
     .join("\n");
 

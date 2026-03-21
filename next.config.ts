@@ -18,6 +18,76 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/guide/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+      {
+        source: "/strategies/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+      {
+        source: "/pricing/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+      {
+        source: "/product-development/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+      {
+        source: "/sales-and-marketing/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+      {
+        source: "/categories",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/category/:slug*",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/calculators",
+        destination: "/tools",
+        permanent: true,
+      },
+      {
+        source: "/growth-calculator",
+        destination: "/tools",
+        permanent: true,
+      },
+      {
+        source: "/growth-calculator/:slug*",
+        destination: "/tools",
+        permanent: true,
+      },
+      {
+        source: "/marketing-calculators",
+        destination: "/tools",
+        permanent: true,
+      },
+      {
+        source: "/marketing-calculators/:slug*",
+        destination: "/tools",
+        permanent: true,
+      },
+      {
+        source: "/ppc-calculator",
+        destination: "/tools",
+        permanent: true,
+      },
+      {
+        source: "/ppc-calculator/:slug*",
+        destination: "/tools",
+        permanent: true,
+      },
+      {
         source: "/resources",
         destination: "/blog",
         permanent: true,
