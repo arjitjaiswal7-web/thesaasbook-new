@@ -8,19 +8,19 @@ import turndownPluginGfm from "turndown-plugin-gfm";
 const { gfm, tables } = turndownPluginGfm;
 
 const BLOG_URLS = [
-  "https://thesaasbook.com/guide/best-client-onboarding-software/",
-  "https://thesaasbook.com/guide/how-to-control-iot-devices/",
-  "https://thesaasbook.com/guide/how-to-manage-warehouse-employees/",
-  "https://thesaasbook.com/strategies/digital-product-strategy/",
-  "https://thesaasbook.com/pricing/saas-pricing-models-guide/",
-  "https://thesaasbook.com/pricing/economy-pricing/",
-  "https://thesaasbook.com/product-development/business-application-development/",
-  "https://thesaasbook.com/product-development/iot-application-development/",
-  "https://thesaasbook.com/sales-and-marketing/how-is-saas-software-distributed/",
-  "https://thesaasbook.com/sales-and-marketing/saas-marketing-strategies/",
-  "https://thesaasbook.com/strategies/white-label-saas/",
-  "https://thesaasbook.com/product-development/product-design-and-product-development/",
-  "https://thesaasbook.com/product-development/iot-product-development/",
+  "https://www.thesaasbook.com/guide/best-client-onboarding-software/",
+  "https://www.thesaasbook.com/guide/how-to-control-iot-devices/",
+  "https://www.thesaasbook.com/guide/how-to-manage-warehouse-employees/",
+  "https://www.thesaasbook.com/strategies/digital-product-strategy/",
+  "https://www.thesaasbook.com/pricing/saas-pricing-models-guide/",
+  "https://www.thesaasbook.com/pricing/economy-pricing/",
+  "https://www.thesaasbook.com/product-development/business-application-development/",
+  "https://www.thesaasbook.com/product-development/iot-application-development/",
+  "https://www.thesaasbook.com/sales-and-marketing/how-is-saas-software-distributed/",
+  "https://www.thesaasbook.com/sales-and-marketing/saas-marketing-strategies/",
+  "https://www.thesaasbook.com/strategies/white-label-saas/",
+  "https://www.thesaasbook.com/product-development/product-design-and-product-development/",
+  "https://www.thesaasbook.com/product-development/iot-product-development/",
 ];
 
 const BLOG_PATH_PREFIXES = [

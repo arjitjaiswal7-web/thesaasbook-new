@@ -18,6 +18,17 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "thesaasbook.com",
+          },
+        ],
+        destination: "https://www.thesaasbook.com/:path*",
+        permanent: true,
+      },
+      {
         source: "/guide/:slug",
         destination: "/blog/:slug",
         permanent: true,

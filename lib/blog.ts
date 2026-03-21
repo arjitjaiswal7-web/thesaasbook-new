@@ -39,7 +39,6 @@ export type BlogPostSummary = Omit<BlogPost, "content" | "headings" | "faqs" | "
 const BLOG_DIRECTORY = path.join(process.cwd(), "content", "blog");
 const BLOG_IMAGE_PLACEHOLDER = "/blog-placeholder.svg";
 const LEGACY_BLOG_IMAGE_PREFIXES = [
-  "https://thesaasbook.com/wp-content/uploads/",
   "https://www.thesaasbook.com/wp-content/uploads/",
 ];
 
@@ -94,7 +93,7 @@ export const blogAuthor = {
   bio:
     "Arjit Jaiswal is the founder of TheSaaSBook. He builds practical SaaS tools and writes about product development, SaaS pricing strategies, and marketing workflows. His goal is to help founders, marketers, and builders launch faster and operate more efficiently.",
   image: "/author/Arjit-jaiswal.jpg",
-  website: "https://thesaasbook.com",
+  website: "https://www.thesaasbook.com",
   linkedin: "https://www.linkedin.com/in/arjit-jaiswal-0322b6166/",
   href: "/about-us",
 } as const;

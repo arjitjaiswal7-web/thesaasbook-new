@@ -126,10 +126,10 @@ export default function TermsAndConditionsPage() {
           <p>
             <span className="font-semibold text-slate-700">Website:</span>{" "}
             <a
-              href="https://thesaasbook.com"
+              href="https://www.thesaasbook.com"
               className="font-medium text-sky-700 transition hover:text-sky-800"
             >
-              https://thesaasbook.com
+              https://www.thesaasbook.com
             </a>
           </p>
           <p>
