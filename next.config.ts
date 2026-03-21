@@ -18,6 +18,39 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/",
+        has: [
+          {
+            type: "host",
+            value: "tools.thesaasbook.com",
+          },
+        ],
+        destination: "https://www.thesaasbook.com/tools",
+        permanent: true,
+      },
+      {
+        source: "/pdf-tools",
+        has: [
+          {
+            type: "host",
+            value: "tools.thesaasbook.com",
+          },
+        ],
+        destination: "https://www.thesaasbook.com/tools/pdf-tools",
+        permanent: true,
+      },
+      {
+        source: "/pdf-tools/:slug*",
+        has: [
+          {
+            type: "host",
+            value: "tools.thesaasbook.com",
+          },
+        ],
+        destination: "https://www.thesaasbook.com/tools/pdf-tools/:slug*",
+        permanent: true,
+      },
+      {
         source: "/:path*",
         has: [
           {

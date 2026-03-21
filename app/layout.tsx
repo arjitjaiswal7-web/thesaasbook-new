@@ -27,7 +27,7 @@ const organizationSchema = {
   name: siteConfig.name,
   url: siteConfig.siteUrl,
   description: siteConfig.description,
-  logo: absoluteUrl("/favicon.ico"),
+  logo: absoluteUrl("/logo.png"),
 };
 
 const websiteSchema = {
@@ -83,9 +83,9 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
   },
 };
 
