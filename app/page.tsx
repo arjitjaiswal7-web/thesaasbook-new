@@ -57,32 +57,34 @@ const authoritySignals = [
 
 const homepageFaqs = [
   {
-    question: "What are free online PDF tools?",
+    question: "What is TheSaaSBook?",
     answer:
-      "Free online PDF tools allow you to merge, split, compress, and convert PDF files directly in your browser without installing software.",
+      "TheSaaSBook is a platform that provides free online tools, SaaS guides, and marketing resources to help businesses and individuals grow efficiently.",
   },
   {
-    question: "Are TheSaaSBook PDF tools free to use?",
-    answer: "Yes. All core PDF tools are free to use with no signup required.",
-  },
-  {
-    question: "Is it safe to upload PDF files online?",
+    question: "Are the tools on TheSaaSBook free to use?",
     answer:
-      "Yes. Files are processed securely and automatically removed after processing.",
+      "Yes, all tools available on TheSaaSBook are completely free to use without any signup or hidden charges.",
   },
   {
-    question: "Can I merge multiple PDF files into one document?",
+    question: "What kind of tools are available on TheSaaSBook?",
     answer:
-      "Yes. The Merge PDF tool lets you combine multiple PDF files quickly.",
+      "You can find PDF tools, marketing calculators, growth tools, and various SaaS-related utilities designed to simplify your workflow.",
   },
   {
-    question: "Can I convert images to PDF online?",
+    question: "Do I need to create an account to use the tools?",
     answer:
-      "Yes. JPG to PDF allows you to convert images into PDF documents.",
+      "No, you don't need to create an account. All tools can be accessed instantly without registration.",
   },
   {
-    question: "Do I need to install software to use these tools?",
-    answer: "No. All tools run directly in your browser.",
+    question: "Is my data safe while using these tools?",
+    answer:
+      "Yes, your data is secure. Most tools process files instantly and do not store your personal or uploaded data.",
+  },
+  {
+    question: "Who can benefit from TheSaaSBook?",
+    answer:
+      "Entrepreneurs, marketers, developers, and students can benefit from TheSaaSBook by using its tools and learning from its SaaS guides.",
   },
 ];
 

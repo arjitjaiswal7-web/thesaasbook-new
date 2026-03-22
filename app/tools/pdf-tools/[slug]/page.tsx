@@ -81,7 +81,7 @@ const toolOverviewDescriptions: Record<string, string> = {
   "split-pdf":
     "Extract selected pages or break a large PDF into smaller files so you can keep only the pages you need.",
   "edit-pdf":
-    "Add text, markups, and quick updates to a PDF before sending it back out or saving a revised version.",
+    "Use a visual PDF editor that detects text lines, lets you overlay edited content in place, and exports a revised PDF that looks updated.",
   "compress-pdf":
     "Reduce PDF file size for faster uploads, email attachments, and easier sharing without leaving the browser.",
   "jpg-to-pdf":
@@ -256,7 +256,7 @@ export default async function ToolDetailPage({ params }: ToolPageProps) {
         : tool.slug === "compress-pdf"
           ? "Upload a PDF, choose a compression level, and download a smaller image-optimized version directly in your browser."
         : tool.slug === "edit-pdf"
-          ? "Upload a PDF, add text annotations, place them on one page or every page, optionally rotate the document, and download the edited file."
+          ? "Upload a PDF, click detected text lines to create editable overlays, add new text boxes, and export a revised PDF with the original text visually covered."
         : tool.slug === "jpg-to-pdf"
           ? "Upload JPG images, arrange them in order, choose a page layout, and export them as a single PDF directly in your browser."
         : tool.slug === "pdf-to-jpg"
