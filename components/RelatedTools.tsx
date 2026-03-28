@@ -6,9 +6,10 @@ import type { LiveTool } from "@/lib/tools";
 
 type RelatedToolsProps = {
   tools: LiveTool[];
+  title?: string;
 };
 
-export default function RelatedTools({ tools }: RelatedToolsProps) {
+export default function RelatedTools({ tools, title = "Related PDF Tools" }: RelatedToolsProps) {
   if (!tools.length) {
     return null;
   }
@@ -16,7 +17,7 @@ export default function RelatedTools({ tools }: RelatedToolsProps) {
   return (
     <section className="mt-12">
       <h2 className="text-3xl font-semibold tracking-tight text-slate-950">
-        Related PDF Tools
+        {title}
       </h2>
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         {tools.map((tool) => {

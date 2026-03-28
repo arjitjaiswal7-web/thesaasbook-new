@@ -28,6 +28,8 @@ export const metadata: Metadata = {
 
 export default function ToolsPage() {
   const featuredPdfTools = pdfTools.slice(0, 6);
+  const liveImageTools = imageTools.filter((tool) => tool.status === "live");
+  const upcomingImageTools = imageTools.filter((tool) => tool.status === "coming-soon");
 
   const toolsSchema = {
     "@context": "https://schema.org",
@@ -121,13 +123,16 @@ export default function ToolsPage() {
                 Image Optimization Tools
               </h2>
               <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
-                A second category is on the way for image compression, resizing,
-                format conversion, and lightweight editing workflows.
+                Use the live Image Compressor tool today for fast browser-side
+                optimization. Additional image tools for resizing and format
+                conversion are rolling out next.
               </p>
             </div>
-            <span className="hidden rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-amber-700 sm:inline-flex">
-              Coming Soon
-            </span>
+            {upcomingImageTools.length > 0 ? (
+              <span className="hidden rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-amber-700 sm:inline-flex">
+                More Coming Soon
+              </span>
+            ) : null}
           </div>
 
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -135,6 +140,18 @@ export default function ToolsPage() {
               <ToolCard key={tool.slug} tool={tool} />
             ))}
           </div>
+
+          {liveImageTools.length > 0 ? (
+            <div className="mt-10 flex justify-center">
+              <Link
+                href="/tools/image-tools"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:bg-slate-800"
+              >
+                View All Tools
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          ) : null}
         </section>
       </main>
     </>

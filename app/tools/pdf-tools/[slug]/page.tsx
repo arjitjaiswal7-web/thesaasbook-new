@@ -14,7 +14,7 @@ import PdfToWordTool from "@/components/tools/PdfToWordTool";
 import SplitPdfTool from "@/components/tools/SplitPdfTool";
 import WordToPdfTool from "@/components/tools/WordToPdfTool";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
-import { getRelatedTools, getToolBySlug, getToolFaqs, pdfTools } from "@/lib/tools";
+import { getPdfToolBySlug, getRelatedTools, getToolFaqs, pdfTools } from "@/lib/tools";
 
 type ToolPageProps = {
   params: Promise<{
@@ -104,7 +104,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const tool = getToolBySlug(slug);
+  const tool = getPdfToolBySlug(slug);
   const meta = toolMetadata[slug];
 
   if (!tool) {
@@ -135,7 +135,7 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
 
 export default async function ToolDetailPage({ params }: ToolPageProps) {
   const { slug } = await params;
-  const tool = getToolBySlug(slug);
+  const tool = getPdfToolBySlug(slug);
 
   if (!tool) {
     notFound();

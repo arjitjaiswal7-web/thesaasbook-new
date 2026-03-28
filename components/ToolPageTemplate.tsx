@@ -15,6 +15,9 @@ type ToolPageTemplateProps = {
   workspace?: React.ReactNode;
   workspaceTitle?: string;
   workspaceDescription?: string;
+  toolGroupLabel?: string;
+  toolGroupHref?: string;
+  relatedToolsTitle?: string;
 };
 
 export default function ToolPageTemplate({
@@ -25,6 +28,9 @@ export default function ToolPageTemplate({
   workspace,
   workspaceTitle,
   workspaceDescription,
+  toolGroupLabel = "PDF Tools",
+  toolGroupHref = "/tools/pdf-tools",
+  relatedToolsTitle,
 }: ToolPageTemplateProps) {
   const Icon = toolIconMap[tool.icon];
 
@@ -34,7 +40,7 @@ export default function ToolPageTemplate({
         items={[
           { label: "Home", href: "/" },
           { label: "Tools", href: "/tools" },
-          { label: "PDF Tools", href: "/tools/pdf-tools" },
+          { label: toolGroupLabel, href: toolGroupHref },
           { label: tool.name },
         ]}
       />
@@ -61,14 +67,14 @@ export default function ToolPageTemplate({
           </h2>
           <p className="mt-3 text-sm leading-6 text-slate-600">
             {overviewDescription ??
-              `Use the ${tool.name} page to complete this PDF workflow quickly with a clean browser-based workspace.`}
+              `Use the ${tool.name} page to complete this workflow quickly with a clean browser-based workspace.`}
           </p>
           <div className="mt-6 space-y-3">
             <Link
-              href="/tools/pdf-tools"
+              href={toolGroupHref}
               className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition hover:text-sky-700"
             >
-              Browse all PDF tools
+              {`Browse all ${toolGroupLabel.toLowerCase()}`}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <div>
@@ -126,7 +132,10 @@ export default function ToolPageTemplate({
         </div>
       </section>
 
-      <RelatedTools tools={relatedTools} />
+      <RelatedTools
+        tools={relatedTools}
+        title={relatedToolsTitle ?? `Related ${toolGroupLabel}`}
+      />
 
       <FAQSection
         items={faqs}

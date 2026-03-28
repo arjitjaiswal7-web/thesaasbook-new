@@ -3,12 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, ShieldCheck, Sparkles, Zap } from "lucide-react";
 
-import FaqSection from "@/components/FaqSection";
 import JsonLd from "@/components/JsonLd";
 import ToolCard, { toolIconMap } from "@/components/ToolCard";
 import { formatPublishedDate, getLatestBlogPosts } from "@/lib/blog";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
-import { featuredTools } from "@/lib/tools";
+import { imageLiveTools, pdfTools } from "@/lib/tools";
 
 export const metadata: Metadata = {
   title: "TheSaaSBook – SaaS Tools, Strategies & Growth Guides",
@@ -90,6 +89,16 @@ const homepageFaqs = [
 
 export default async function Page() {
   const latestPosts = await getLatestBlogPosts(3);
+  const featuredPdfTools = pdfTools.slice(0, 3);
+  const featuredImageTools = imageLiveTools.slice(0, 3);
+  const featuredHomepageTools = [
+    featuredPdfTools[0],
+    featuredImageTools[0],
+    featuredPdfTools[1],
+    featuredImageTools[1],
+    featuredPdfTools[2],
+    featuredImageTools[2],
+  ].filter(Boolean);
 
   const homeSchema = {
     "@context": "https://schema.org",
@@ -100,8 +109,8 @@ export default async function Page() {
       "Discover SaaS tools, strategies, pricing, and marketing guides to grow your business faster with actionable insights.",
     mainEntity: {
       "@type": "ItemList",
-      name: "Featured PDF tools",
-      itemListElement: featuredTools.map((tool, index) => ({
+      name: "Featured tools",
+      itemListElement: featuredHomepageTools.map((tool, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: tool.name,
@@ -175,7 +184,7 @@ export default async function Page() {
                 </div>
 
                 <div className="space-y-3 p-6">
-                  {featuredTools.slice(0, 3).map((tool) => {
+                  {featuredHomepageTools.slice(0, 3).map((tool) => {
                     const Icon = toolIconMap[tool.icon];
 
                     return (
@@ -200,10 +209,10 @@ export default async function Page() {
                   })}
 
                   <Link
-                    href="/tools/pdf-tools"
+                    href="/tools"
                     className="inline-flex items-center gap-2 pt-2 text-sm font-semibold text-slate-950 transition hover:text-sky-700"
                   >
-                    Browse all PDF tools
+                    Browse all tools
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </div>
@@ -223,50 +232,70 @@ export default async function Page() {
               </h2>
             </div>
             <Link
-              href="/tools/pdf-tools"
+              href="/tools"
               className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition hover:text-sky-700"
             >
-              Open PDF tools
+              Explore all tools
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
 
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {featuredTools.map((tool) => (
+            {featuredHomepageTools.map((tool) => (
               <ToolCard key={tool.slug} tool={tool} />
             ))}
           </div>
         </section>
 
-        <section className="border-y border-slate-200/80 bg-white/75">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
-                Why TheSaaSBook
+                PDF Tools
               </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-                Built for Speed, Simplicity, and Trust
+                Fast PDF workflows for everyday document tasks
               </h2>
             </div>
+            <Link
+              href="/tools/pdf-tools"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition hover:text-sky-700"
+            >
+              View all PDF tools
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
 
-            <div className="mt-10 grid gap-4 md:grid-cols-3">
-              {authoritySignals.map((signal) => (
-                <article
-                  key={signal.title}
-                  className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6"
-                >
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-slate-950 shadow-sm">
-                    <signal.icon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-5 text-xl font-semibold tracking-tight text-slate-950">
-                    {signal.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">
-                    {signal.description}
-                  </p>
-                </article>
-              ))}
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {featuredPdfTools.map((tool) => (
+              <ToolCard key={tool.slug} tool={tool} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
+                Image Optimization Tools
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                Free Image Optimization Tools for Faster Loading & Better Performance
+              </h2>
             </div>
+            <Link
+              href="/tools/image-tools"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 transition hover:text-sky-700"
+            >
+              View all image tools
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {featuredImageTools.map((tool) => (
+              <ToolCard key={tool.slug} tool={tool} />
+            ))}
           </div>
         </section>
 
@@ -307,7 +336,6 @@ export default async function Page() {
                   </div>
                 ) : null}
                 <div className="p-6">
-                  <p className="text-sm font-medium text-sky-700">{post.category}</p>
                   <h3 className="text-xl font-semibold tracking-tight text-slate-950">
                     {post.title}
                   </h3>
@@ -330,42 +358,99 @@ export default async function Page() {
           </div>
         </section>
 
-        <FaqSection
-          title="Frequently Asked Questions"
-          intro="Common questions about using TheSaaSBook tools online."
-          items={homepageFaqs}
-        />
+        <section className="border-y border-slate-200/80 bg-white/75">
+          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
+                Why TheSaaSBook
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                Built for Speed, Simplicity, and Trust
+              </h2>
+            </div>
 
-        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-24">
-          <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 px-6 py-10 text-white shadow-[0_20px_80px_-24px_rgba(15,23,42,0.45)] sm:px-10">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-300">
-                  Get Started with Free Tools
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                  Start Using Tools That Save Your Time
-                </h2>
-                <p className="mt-4 text-base leading-7 text-slate-300">
-                  Access simple, powerful tools and practical guides — all in one place.
-                </p>
-              </div>
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {authoritySignals.map((signal) => (
+                <article
+                  key={signal.title}
+                  className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6"
+                >
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-slate-950 shadow-sm">
+                    <signal.icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-5 text-xl font-semibold tracking-tight text-slate-950">
+                    {signal.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">
+                    {signal.description}
+                  </p>
+                </article>
+              ))}
+            </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/tools/pdf-tools"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+            <div className="mt-16 max-w-3xl">
+              <h3 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                Frequently Asked Questions
+              </h3>
+              <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
+                Common questions about using TheSaaSBook tools online.
+              </p>
+            </div>
+
+            <div className="mt-10 space-y-4">
+              {homepageFaqs.map((item) => (
+                <details
+                  key={item.question}
+                  className="group rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50"
                 >
-                  Open PDF Tools
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
-                >
-                  Read Blog
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
+                    <h3 className="text-lg font-semibold tracking-tight text-slate-950">
+                      {item.question}
+                    </h3>
+                    <span
+                      className="text-2xl leading-none text-slate-400 transition-transform duration-200 group-open:rotate-45"
+                      aria-hidden="true"
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-4 max-w-3xl text-sm leading-6 text-slate-600">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+
+            <div className="mt-16 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 px-6 py-10 text-white shadow-[0_20px_80px_-24px_rgba(15,23,42,0.45)] sm:px-10">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-2xl">
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-300">
+                    Get Started with Free Tools
+                  </p>
+                  <h3 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                    Start Using Tools That Save Your Time
+                  </h3>
+                  <p className="mt-4 text-base leading-7 text-slate-300">
+                    Access simple, powerful tools and practical guides — all in one place.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Link
+                    href="/tools"
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+                  >
+                    Explore Tools
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                  >
+                    Read Blog
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

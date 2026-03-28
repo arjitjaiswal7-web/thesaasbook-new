@@ -89,8 +89,7 @@ export default async function BlogPage() {
                   </div>
                 ) : null}
                 <div className="p-6">
-                  <p className="text-sm font-medium text-sky-700">{post.category}</p>
-                  <h3 className="mt-3 text-xl font-semibold tracking-tight text-slate-950">
+                  <h3 className="text-xl font-semibold tracking-tight text-slate-950">
                     {post.title}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-slate-600">

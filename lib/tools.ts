@@ -27,7 +27,7 @@ type ToolBase = {
 export type LiveTool = ToolBase & {
   status: "live";
   featured: boolean;
-  href: `/tools/pdf-tools/${string}`;
+  href: `/tools/${string}`;
   relatedSlugs: string[];
   howToSteps: string[];
 };
@@ -236,11 +236,18 @@ export const tools: Tool[] = [
     name: "Image Compressor",
     categoryLabel: "Image Tools",
     group: "image-tools",
-    description: "Shrink image file sizes while keeping visuals sharp.",
+    description: "Compress JPG, PNG, and WebP images quickly with quality controls.",
     icon: "minimize",
-    status: "coming-soon",
+    status: "live",
     featured: false,
-    badge: "Coming Soon",
+    href: "/tools/image-tools/image-compressor",
+    relatedSlugs: ["image-resizer", "jpg-to-pdf", "pdf-to-jpg"],
+    howToSteps: [
+      "Upload one or more images you want to optimize.",
+      "Choose a quality preset and output format.",
+      "Run compression and review the size reduction.",
+      "Download each optimized image file.",
+    ],
   },
   {
     slug: "image-resizer",
@@ -249,9 +256,16 @@ export const tools: Tool[] = [
     group: "image-tools",
     description: "Resize images for web, ads, and social formats in seconds.",
     icon: "image",
-    status: "coming-soon",
+    status: "live",
     featured: false,
-    badge: "Coming Soon",
+    href: "/tools/image-tools/image-resizer",
+    relatedSlugs: ["image-compressor", "jpg-to-pdf", "pdf-to-jpg"],
+    howToSteps: [
+      "Upload one or more images you want to resize.",
+      "Choose a preset or enter custom dimensions.",
+      "Set output format and aspect ratio behavior.",
+      "Resize the files and download the results.",
+    ],
   },
   {
     slug: "png-to-jpg",
@@ -260,9 +274,16 @@ export const tools: Tool[] = [
     group: "image-tools",
     description: "Convert PNG images into lighter JPG files for faster delivery.",
     icon: "fileImage",
-    status: "coming-soon",
+    status: "live",
     featured: false,
-    badge: "Coming Soon",
+    href: "/tools/image-tools/png-to-jpg",
+    relatedSlugs: ["image-compressor", "image-resizer", "jpg-to-pdf"],
+    howToSteps: [
+      "Upload one or more PNG images.",
+      "Choose the JPG quality and background fill.",
+      "Convert the files to JPG in your browser.",
+      "Download the lighter JPG outputs.",
+    ],
   },
   {
     slug: "jpg-to-png",
@@ -271,33 +292,68 @@ export const tools: Tool[] = [
     group: "image-tools",
     description: "Convert JPG files into PNG format for cleaner visual assets.",
     icon: "image",
-    status: "coming-soon",
+    status: "live",
     featured: false,
-    badge: "Coming Soon",
+    href: "/tools/image-tools/jpg-to-png",
+    relatedSlugs: ["png-to-jpg", "image-resizer", "image-compressor"],
+    howToSteps: [
+      "Upload one or more JPG images.",
+      "Start the PNG conversion in your browser.",
+      "Review the generated PNG outputs.",
+      "Download each converted file.",
+    ],
+  },
+  {
+    slug: "jpg-to-webp",
+    name: "JPG to WebP",
+    categoryLabel: "Image Tools",
+    group: "image-tools",
+    description: "Convert JPG images into smaller WebP files for faster web delivery.",
+    icon: "fileImage",
+    status: "live",
+    featured: false,
+    href: "/tools/image-tools/jpg-to-webp",
+    relatedSlugs: ["jpg-to-png", "png-to-jpg", "image-compressor"],
+    howToSteps: [
+      "Upload one or more JPG images.",
+      "Choose the WebP quality level.",
+      "Convert the files in your browser.",
+      "Download the lighter WebP outputs.",
+    ],
   },
   {
     slug: "image-cropper",
-    name: "Image Cropper",
+    name: "Crop Image",
     categoryLabel: "Image Tools",
     group: "image-tools",
     description: "Crop images quickly for previews, posts, and landing pages.",
     icon: "image",
-    status: "coming-soon",
+    status: "live",
     featured: false,
-    badge: "Coming Soon",
+    href: "/tools/image-tools/image-cropper",
+    relatedSlugs: ["image-resizer", "image-compressor", "png-to-jpg"],
+    howToSteps: [
+      "Upload the image you want to crop.",
+      "Choose an aspect ratio or crop freely.",
+      "Adjust the crop area with the preview controls.",
+      "Download the cropped image in your preferred format.",
+    ],
   },
 ];
 
-export const pdfTools = tools.filter(
-  (tool): tool is LiveTool => tool.group === "pdf-tools" && tool.status === "live",
+export const liveTools = tools.filter(
+  (tool): tool is LiveTool => tool.status === "live",
+);
+
+export const pdfTools = liveTools.filter((tool) => tool.group === "pdf-tools");
+
+export const imageLiveTools = liveTools.filter(
+  (tool) => tool.group === "image-tools",
 );
 
 export const featuredTools = pdfTools.filter((tool) => tool.featured);
 
-export const imageTools = tools.filter(
-  (tool): tool is ComingSoonTool =>
-    tool.group === "image-tools" && tool.status === "coming-soon",
-);
+export const imageTools = tools.filter((tool) => tool.group === "image-tools");
 
 const toolFaqsBySlug: Record<string, ToolFaq[]> = {
   "merge-pdf": [
@@ -570,21 +626,191 @@ const toolFaqsBySlug: Record<string, ToolFaq[]> = {
         "No, the tool works online without installation. You can access it from any device. It is quick and easy to use.",
     },
   ],
+  "image-compressor": [
+    {
+      question: "How can I compress images online without losing quality?",
+      answer:
+        "Upload your images, choose a balanced quality preset, and export optimized files directly in your browser. The compressor reduces file size while keeping visuals clean for web and sharing.",
+    },
+    {
+      question: "Which image formats are supported?",
+      answer:
+        "You can upload JPG, JPEG, PNG, and WebP files. The tool can export optimized images in JPEG or WebP format for better compression.",
+    },
+    {
+      question: "Is image compression fast on large photos?",
+      answer:
+        "Yes. Compression runs client-side in your browser and is optimized for quick processing, even for high-resolution photos, with progress feedback for multi-file batches.",
+    },
+    {
+      question: "Are my images secure?",
+      answer:
+        "Yes. Files are processed in your browser and are not uploaded to external servers by this tool flow, which helps keep your image data private.",
+    },
+    {
+      question: "Can I use this on mobile devices?",
+      answer:
+        "Yes. The tool works on modern mobile, tablet, and desktop browsers so you can compress images from any device.",
+    },
+  ],
+  "image-resizer": [
+    {
+      question: "How can I resize images online for free?",
+      answer:
+        "Upload your images, choose a preset or custom width and height, and export the resized files directly in your browser. The workflow is fast and does not require any software installation.",
+    },
+    {
+      question: "Can I keep the original aspect ratio while resizing?",
+      answer:
+        "Yes. The tool includes an aspect-ratio lock so images can scale proportionally without stretching. You can also disable it when you need exact dimensions.",
+    },
+    {
+      question: "Which formats does the Image Resizer support?",
+      answer:
+        "You can upload JPG, JPEG, PNG, and WebP images. The resized result can be exported in the original format, JPEG, PNG, or WebP depending on your selection.",
+    },
+    {
+      question: "Is the Image Resizer secure?",
+      answer:
+        "Yes. Resizing is handled in your browser for this tool flow, so your uploaded images do not need to be sent to external servers.",
+    },
+    {
+      question: "Can I resize multiple images at once?",
+      answer:
+        "Yes. You can upload a batch of images, apply the same resize settings, and download each resized file individually.",
+    },
+  ],
+  "png-to-jpg": [
+    {
+      question: "How can I convert PNG to JPG online for free?",
+      answer:
+        "Upload your PNG files, choose JPG quality and a background color if needed, then convert them directly in your browser. The tool prepares lightweight JPG files without requiring any software installation.",
+    },
+    {
+      question: "What happens to transparent PNG backgrounds?",
+      answer:
+        "Because JPG does not support transparency, transparent areas are filled with a background color during conversion. You can choose a white, black, or custom background before exporting.",
+    },
+    {
+      question: "Can I convert multiple PNG files at once?",
+      answer:
+        "Yes. The tool supports batch conversion so you can upload several PNG images and convert them all in one pass.",
+    },
+    {
+      question: "Is PNG to JPG conversion secure?",
+      answer:
+        "Yes. The conversion runs in your browser for this tool flow, which means your image files do not need to be sent to external servers.",
+    },
+    {
+      question: "Why should I convert PNG to JPG?",
+      answer:
+        "JPG files are often much smaller than PNG files, which makes them easier to upload, share, and use on websites where lower file size matters.",
+    },
+  ],
+  "jpg-to-png": [
+    {
+      question: "How can I convert JPG to PNG online for free?",
+      answer:
+        "Upload your JPG files and convert them to PNG directly in your browser. The process is fast, does not require software installation, and keeps the image colors unchanged.",
+    },
+    {
+      question: "Does JPG to PNG add any color filter or effect?",
+      answer:
+        "No. The tool performs a direct format conversion only. It does not apply color filters, background effects, or visual edits to your image.",
+    },
+    {
+      question: "Can I convert multiple JPG files at once?",
+      answer:
+        "Yes. The tool supports batch conversion so you can upload several JPG images and convert them all to PNG in one pass.",
+    },
+    {
+      question: "Is JPG to PNG conversion secure?",
+      answer:
+        "Yes. The conversion runs in your browser for this tool flow, so your image files do not need to be sent to external servers.",
+    },
+    {
+      question: "Why convert JPG to PNG?",
+      answer:
+        "PNG is useful when you want a lossless image format for editing, design workflows, or repeated exports where you want to avoid additional JPG compression.",
+    },
+  ],
+  "jpg-to-webp": [
+    {
+      question: "How can I convert JPG to WebP online for free?",
+      answer:
+        "Upload your JPG files, choose the WebP quality level, and convert them directly in your browser. The process is fast, free, and does not require any software installation.",
+    },
+    {
+      question: "Will WebP reduce my JPG image size?",
+      answer:
+        "In most cases, yes. WebP often produces smaller files than JPG while keeping strong visual quality, which makes it useful for websites, ecommerce images, and content pages.",
+    },
+    {
+      question: "Can I convert multiple JPG files to WebP at once?",
+      answer:
+        "Yes. The tool supports batch conversion so you can upload several JPG images and export them as WebP in one pass.",
+    },
+    {
+      question: "Is JPG to WebP conversion secure?",
+      answer:
+        "Yes. The conversion runs in your browser for this tool flow, so your image files do not need to be sent to external servers.",
+    },
+    {
+      question: "Can I control the output quality of the WebP files?",
+      answer:
+        "Yes. You can adjust the WebP quality slider before converting so you can balance file size and image detail for your workflow.",
+    },
+  ],
+  "image-cropper": [
+    {
+      question: "How can I crop an image online for free?",
+      answer:
+        "Upload your image, position the crop area in the preview, choose an aspect ratio if needed, and export the cropped result directly in your browser. No installation is required.",
+    },
+    {
+      question: "Can I crop images to social media or banner sizes?",
+      answer:
+        "Yes. The tool includes preset aspect ratios such as square, widescreen, portrait, and other common layouts so you can crop images for posts, banners, and previews more quickly.",
+    },
+    {
+      question: "Will cropping reduce image quality?",
+      answer:
+        "Cropping removes the outer parts of the image but does not add visual filters. Quality is preserved based on the output format you choose when exporting the cropped file.",
+    },
+    {
+      question: "Is Crop Image secure?",
+      answer:
+        "Yes. Cropping runs in your browser for this tool flow, so your uploaded image does not need to be sent to external servers.",
+    },
+    {
+      question: "Can I export the cropped image in different formats?",
+      answer:
+        "Yes. You can export the cropped result in the original format or choose JPEG, PNG, or WebP depending on your workflow.",
+    },
+  ],
 };
 
-export function getToolBySlug(slug: string) {
+export function getLiveToolBySlug(slug: string) {
+  return liveTools.find((tool) => tool.slug === slug);
+}
+
+export function getPdfToolBySlug(slug: string) {
   return pdfTools.find((tool) => tool.slug === slug);
 }
 
+export function getToolBySlug(slug: string) {
+  return getLiveToolBySlug(slug);
+}
+
 export function getRelatedTools(slug: string) {
-  const tool = getToolBySlug(slug);
+  const tool = getLiveToolBySlug(slug);
 
   if (!tool) {
     return [];
   }
 
   return tool.relatedSlugs
-    .map((relatedSlug) => getToolBySlug(relatedSlug))
+    .map((relatedSlug) => getLiveToolBySlug(relatedSlug))
     .filter((relatedTool): relatedTool is LiveTool => Boolean(relatedTool));
 }
 

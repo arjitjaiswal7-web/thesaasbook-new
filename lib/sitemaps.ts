@@ -3,7 +3,7 @@ import path from "node:path";
 
 import { getAllBlogPosts } from "@/lib/blog";
 import { absoluteUrl } from "@/lib/site-config";
-import { pdfTools } from "@/lib/tools";
+import { liveTools } from "@/lib/tools";
 
 type SitemapChangeFrequency =
   | "always"
@@ -85,6 +85,12 @@ const toolComponentBySlug: Record<string, string> = {
   "pdf-to-jpg": "components/tools/PdfToJpgTool.tsx",
   "pdf-to-excel": "components/tools/PdfToExcelTool.tsx",
   "pdf-to-powerpoint": "components/tools/PdfToPowerPointTool.tsx",
+  "image-compressor": "components/tools/ImageCompressorTool.tsx",
+  "image-resizer": "components/tools/ImageResizerTool.tsx",
+  "png-to-jpg": "components/tools/PngToJpgTool.tsx",
+  "jpg-to-png": "components/tools/JpgToPngTool.tsx",
+  "jpg-to-webp": "components/tools/JpgToWebpTool.tsx",
+  "image-cropper": "components/tools/ImageCropperTool.tsx",
 };
 
 function escapeXml(value: string) {
@@ -170,6 +176,13 @@ export async function getToolsSitemapEntries(): Promise<SitemapEntry[]> {
     "app/tools/page.tsx",
     "app/tools/pdf-tools/page.tsx",
     "app/tools/pdf-tools/[slug]/page.tsx",
+    "app/tools/image-tools/page.tsx",
+    "app/tools/image-tools/image-compressor/page.tsx",
+    "app/tools/image-tools/image-resizer/page.tsx",
+    "app/tools/image-tools/png-to-jpg/page.tsx",
+    "app/tools/image-tools/jpg-to-png/page.tsx",
+    "app/tools/image-tools/jpg-to-webp/page.tsx",
+    "app/tools/image-tools/image-cropper/page.tsx",
     "components/ToolPageTemplate.tsx",
     "lib/tools.ts",
   ];
@@ -190,10 +203,19 @@ export async function getToolsSitemapEntries(): Promise<SitemapEntry[]> {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    {
+      url: absoluteUrl("/tools/image-tools"),
+      lastModified: await getLastModified(
+        "app/tools/image-tools/page.tsx",
+        "lib/tools.ts",
+      ),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
   ];
 
   const toolEntries = await Promise.all(
-    pdfTools.map(async (tool) => ({
+    liveTools.map(async (tool) => ({
       url: absoluteUrl(tool.href),
       lastModified: await getLastModified(
         ...sharedSources,
