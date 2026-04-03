@@ -91,6 +91,8 @@ const toolComponentBySlug: Record<string, string> = {
   "jpg-to-png": "components/tools/JpgToPngTool.tsx",
   "jpg-to-webp": "components/tools/JpgToWebpTool.tsx",
   "image-cropper": "components/tools/ImageCropperTool.tsx",
+  "robots-txt-tester": "components/tools/RobotsTxtTesterTool.tsx",
+  "xml-sitemap-generator": "components/tools/XmlSitemapGeneratorTool.tsx",
 };
 
 function escapeXml(value: string) {
@@ -177,12 +179,17 @@ export async function getToolsSitemapEntries(): Promise<SitemapEntry[]> {
     "app/tools/pdf-tools/page.tsx",
     "app/tools/pdf-tools/[slug]/page.tsx",
     "app/tools/image-tools/page.tsx",
+    "app/tools/seo-tools/page.tsx",
     "app/tools/image-tools/image-compressor/page.tsx",
     "app/tools/image-tools/image-resizer/page.tsx",
     "app/tools/image-tools/png-to-jpg/page.tsx",
     "app/tools/image-tools/jpg-to-png/page.tsx",
     "app/tools/image-tools/jpg-to-webp/page.tsx",
     "app/tools/image-tools/image-cropper/page.tsx",
+    "app/tools/seo-tools/robots-txt-tester/page.tsx",
+    "app/tools/seo-tools/xml-sitemap-generator/page.tsx",
+    "app/api/seo/robots-txt-tester/route.ts",
+    "lib/robots-txt.ts",
     "components/ToolPageTemplate.tsx",
     "lib/tools.ts",
   ];
@@ -207,6 +214,15 @@ export async function getToolsSitemapEntries(): Promise<SitemapEntry[]> {
       url: absoluteUrl("/tools/image-tools"),
       lastModified: await getLastModified(
         "app/tools/image-tools/page.tsx",
+        "lib/tools.ts",
+      ),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: absoluteUrl("/tools/seo-tools"),
+      lastModified: await getLastModified(
+        "app/tools/seo-tools/page.tsx",
         "lib/tools.ts",
       ),
       changeFrequency: "weekly",

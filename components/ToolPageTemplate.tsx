@@ -46,7 +46,7 @@ export default function ToolPageTemplate({
       />
 
       <section className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)]">
-        <div>
+        <div className="min-w-0">
           <span className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
             {tool.categoryLabel}
           </span>
@@ -58,7 +58,7 @@ export default function ToolPageTemplate({
           </p>
         </div>
 
-        <aside className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
+        <aside className="min-w-0 rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
           <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-lg shadow-slate-900/10">
             <Icon className="h-5 w-5" aria-hidden="true" />
           </span>
@@ -99,7 +99,7 @@ export default function ToolPageTemplate({
             `Use the ${tool.name} workspace below to process files directly in your browser.`}
         </p>
         {workspace ? (
-          <div className="mt-6">{workspace}</div>
+          <div className="mt-6 min-w-0">{workspace}</div>
         ) : (
           <div className="mt-6 flex min-h-72 items-center justify-center rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 px-6 text-center">
             <div className="max-w-xl">

@@ -27,6 +27,7 @@ export default function RelatedTools({ tools, title = "Related PDF Tools" }: Rel
             <Link
               key={tool.slug}
               href={tool.href}
+              prefetch={false}
               className="group rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50 transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-200/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200"
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-lg shadow-slate-900/10">

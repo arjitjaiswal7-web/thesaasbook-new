@@ -65,10 +65,11 @@ export default function ToolCard({ tool }: ToolCardProps) {
   }
 
   return (
-    <article className="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/70">
+    <article className="group h-full rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/70">
       <Link
         href={tool.href}
-        className="block rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200"
+        prefetch={false}
+        className="block h-full rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200"
       >
         <div className="flex items-start justify-between gap-4">
           <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-lg shadow-slate-900/10 transition group-hover:bg-slate-900">
@@ -79,10 +80,10 @@ export default function ToolCard({ tool }: ToolCardProps) {
           </span>
         </div>
 
-        <h3 className="mt-6 text-xl font-semibold tracking-tight text-slate-950">
+        <h3 className="mt-6 break-words text-xl font-semibold tracking-tight text-slate-950">
           {tool.name}
         </h3>
-        <p className="mt-3 text-sm leading-6 text-slate-600">
+        <p className="mt-3 break-words text-sm leading-6 text-slate-600">
           {tool.description}
         </p>
 

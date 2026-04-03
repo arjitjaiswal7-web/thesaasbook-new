@@ -18,8 +18,8 @@ export type ToolFaq = {
 type ToolBase = {
   slug: string;
   name: string;
-  categoryLabel: "PDF Tools" | "Image Tools";
-  group: "pdf-tools" | "image-tools";
+  categoryLabel: "PDF Tools" | "Image Tools" | "SEO Tools";
+  group: "pdf-tools" | "image-tools" | "seo-tools";
   description: string;
   icon: ToolIconKey;
 };
@@ -41,6 +41,42 @@ export type ComingSoonTool = ToolBase & {
 export type Tool = LiveTool | ComingSoonTool;
 
 export const tools: Tool[] = [
+  {
+    slug: "robots-txt-tester",
+    name: "Robots.txt Tester",
+    categoryLabel: "SEO Tools",
+    group: "seo-tools",
+    description: "Test robots.txt rules, crawl access, and blocked resources for any URL.",
+    icon: "fileText",
+    status: "live",
+    featured: false,
+    href: "/tools/seo-tools/robots-txt-tester",
+    relatedSlugs: ["xml-sitemap-generator"],
+    howToSteps: [
+      "Enter the full URL you want to test.",
+      "Choose the crawler user-agent you want to simulate.",
+      "Optionally paste custom robots.txt rules or enable resource checks.",
+      "Run the test and review the matched rule, crawl status, and linked resources.",
+    ],
+  },
+  {
+    slug: "xml-sitemap-generator",
+    name: "XML Sitemap Generator",
+    categoryLabel: "SEO Tools",
+    group: "seo-tools",
+    description: "Generate XML sitemaps from direct URLs or imported files with lastmod, changefreq, and priority.",
+    icon: "fileText",
+    status: "live",
+    featured: false,
+    href: "/tools/seo-tools/xml-sitemap-generator",
+    relatedSlugs: ["robots-txt-tester"],
+    howToSteps: [
+      "Paste URLs directly or upload a TXT, CSV, JSON, or XML file.",
+      "Set the default last modified date, change frequency, and priority.",
+      "Review or edit each URL entry before export.",
+      "Generate and download the final sitemap.xml file.",
+    ],
+  },
   {
     slug: "merge-pdf",
     name: "Merge PDF",
@@ -351,11 +387,69 @@ export const imageLiveTools = liveTools.filter(
   (tool) => tool.group === "image-tools",
 );
 
+export const seoLiveTools = liveTools.filter((tool) => tool.group === "seo-tools");
+
 export const featuredTools = pdfTools.filter((tool) => tool.featured);
 
 export const imageTools = tools.filter((tool) => tool.group === "image-tools");
 
+export const seoTools = tools.filter((tool) => tool.group === "seo-tools");
+
 const toolFaqsBySlug: Record<string, ToolFaq[]> = {
+  "robots-txt-tester": [
+    {
+      question: "What does the Robots.txt Tester do?",
+      answer:
+        "It checks whether a specific URL is allowed or blocked for a selected bot based on robots.txt rules. It also shows the matched rule and can inspect linked page resources.",
+    },
+    {
+      question: "Can I test a draft robots.txt file before publishing it?",
+      answer:
+        "Yes. Turn on the live editor and paste custom robots.txt rules to test a draft file against any URL before you deploy it.",
+    },
+    {
+      question: "Can I test different bots like Googlebot or GPTBot?",
+      answer:
+        "Yes. You can switch between common crawler user-agents such as Googlebot, Bingbot, GPTBot, ChatGPT-User, and others to see how access changes.",
+    },
+    {
+      question: "Does the tool check blocked CSS, JavaScript, and images?",
+      answer:
+        "Yes. If resource checking is enabled, the tool inspects linked page resources and evaluates whether they appear to be blocked by robots.txt rules.",
+    },
+    {
+      question: "Is the Robots.txt Tester safe to use?",
+      answer:
+        "Yes. You only provide a public URL or draft robots.txt content for testing. The tool analyzes crawl directives and does not modify the target website.",
+    },
+  ],
+  "xml-sitemap-generator": [
+    {
+      question: "What does the XML Sitemap Generator do?",
+      answer:
+        "It creates a valid XML sitemap file from direct URLs or uploaded TXT, CSV, JSON, and XML sources. You can include last modified dates, change frequency, and priority for every URL.",
+    },
+    {
+      question: "How many URLs can I include in one sitemap?",
+      answer:
+        "You can generate a sitemap with up to 500 URLs in this tool. The interface keeps the list editable before you download the final XML file.",
+    },
+    {
+      question: "Can I upload a CSV or an existing sitemap file?",
+      answer:
+        "Yes. The tool accepts TXT, CSV, JSON, and XML sitemap files. CSV, JSON, and XML imports can preserve fields like lastmod, changefreq, and priority when they are available.",
+    },
+    {
+      question: "Can I edit last modified, change frequency, and priority before export?",
+      answer:
+        "Yes. Every imported URL stays editable in the table, so you can adjust lastmod, changefreq, and priority before generating the XML output.",
+    },
+    {
+      question: "Is the XML Sitemap Generator safe to use?",
+      answer:
+        "Yes. The tool runs entirely in your browser for sitemap creation. Your URL lists and imported files are not sent to a server for generation.",
+    },
+  ],
   "merge-pdf": [
     {
       question: "How can I merge PDF files online for free without losing quality?",

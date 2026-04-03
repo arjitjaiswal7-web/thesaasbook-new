@@ -3,16 +3,7 @@ import { notFound } from "next/navigation";
 
 import JsonLd from "@/components/JsonLd";
 import ToolPageTemplate from "@/components/ToolPageTemplate";
-import CompressPdfTool from "@/components/tools/CompressPdfTool";
-import EditPdfTool from "@/components/tools/EditPdfTool";
-import JpgToPdfTool from "@/components/tools/JpgToPdfTool";
-import MergePdfTool from "@/components/tools/MergePdfTool";
-import PdfToExcelTool from "@/components/tools/PdfToExcelTool";
-import PdfToJpgTool from "@/components/tools/PdfToJpgTool";
-import PdfToPowerPointTool from "@/components/tools/PdfToPowerPointTool";
-import PdfToWordTool from "@/components/tools/PdfToWordTool";
-import SplitPdfTool from "@/components/tools/SplitPdfTool";
-import WordToPdfTool from "@/components/tools/WordToPdfTool";
+import PdfToolWorkspace from "@/components/tools/PdfToolWorkspace";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
 import { getPdfToolBySlug, getRelatedTools, getToolFaqs, pdfTools } from "@/lib/tools";
 
@@ -202,28 +193,7 @@ export default async function ToolDetailPage({ params }: ToolPageProps) {
     })),
   };
 
-  const workspace =
-    tool.slug === "merge-pdf" ? (
-      <MergePdfTool />
-    ) : tool.slug === "split-pdf" ? (
-      <SplitPdfTool />
-    ) : tool.slug === "compress-pdf" ? (
-      <CompressPdfTool />
-    ) : tool.slug === "edit-pdf" ? (
-      <EditPdfTool />
-    ) : tool.slug === "jpg-to-pdf" ? (
-      <JpgToPdfTool />
-    ) : tool.slug === "pdf-to-jpg" ? (
-      <PdfToJpgTool />
-    ) : tool.slug === "pdf-to-excel" ? (
-      <PdfToExcelTool />
-    ) : tool.slug === "pdf-to-powerpoint" ? (
-      <PdfToPowerPointTool />
-    ) : tool.slug === "pdf-to-word" ? (
-      <PdfToWordTool />
-    ) : tool.slug === "word-to-pdf" ? (
-      <WordToPdfTool />
-    ) : null;
+  const workspace = <PdfToolWorkspace slug={tool.slug} />;
 
   const workspaceTitle =
     tool.slug === "merge-pdf"

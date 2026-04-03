@@ -138,8 +138,8 @@ export default async function Page() {
 
       <main>
         <section className="relative overflow-hidden">
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 pb-20 pt-14 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:px-8 lg:pb-24 lg:pt-20">
-            <div className="max-w-3xl">
+          <div className="mx-auto grid max-w-6xl gap-10 px-4 pb-16 pt-12 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12 lg:px-8 lg:pb-24 lg:pt-20">
+            <div className="min-w-0 max-w-3xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 shadow-sm shadow-slate-200/50">
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-sky-100 text-sky-700">
                   <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
@@ -173,7 +173,7 @@ export default async function Page() {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative min-w-0">
               <div className="absolute inset-x-8 top-8 -z-10 h-64 rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.18),_transparent_65%)] blur-3xl" />
               <div className="overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/95 shadow-[0_20px_80px_-24px_rgba(15,23,42,0.25)]">
                 <div className="border-b border-slate-200/80 bg-slate-950 px-6 py-5 text-white">
@@ -191,6 +191,7 @@ export default async function Page() {
                       <Link
                         key={tool.slug}
                         href={tool.href}
+                        prefetch={false}
                         className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-slate-300 hover:bg-slate-50"
                       >
                         <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-50 text-sky-700">
@@ -200,7 +201,7 @@ export default async function Page() {
                           <span className="block text-sm font-semibold text-slate-950">
                             {tool.name}
                           </span>
-                          <span className="mt-1 block text-sm text-slate-500">
+                          <span className="mt-1 block break-words text-sm text-slate-500">
                             {tool.description}
                           </span>
                         </span>

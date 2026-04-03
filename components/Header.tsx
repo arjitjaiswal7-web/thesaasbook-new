@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Menu, X } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Logo from "@/components/Logo";
 
@@ -23,7 +23,7 @@ function isActive(pathname: string, href: string) {
 
 export default function Header() {
   const pathname = usePathname();
-  const mobileNavId = useId();
+  const mobileNavId = "primary-mobile-navigation";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 

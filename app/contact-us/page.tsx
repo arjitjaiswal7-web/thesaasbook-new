@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
 
@@ -66,63 +67,7 @@ export default function ContactUsPage() {
           <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
             Send a message
           </h2>
-          <form
-            action="mailto:contact@thesaasbook.com"
-            method="post"
-            encType="text/plain"
-            className="mt-6 space-y-5"
-          >
-            <div>
-              <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-700">
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
-                placeholder="Your name"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
-                placeholder="you@example.com"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="mb-2 block text-sm font-medium text-slate-700">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={6}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
-                placeholder="Tell us how we can help."
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200"
-            >
-              Send Message
-            </button>
-          </form>
+          <ContactForm />
         </section>
 
         <section className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm shadow-slate-200/60 sm:p-10">
