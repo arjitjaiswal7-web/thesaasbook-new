@@ -2,24 +2,62 @@
 
 import { useState } from "react";
 
-const contactEmail = "contact@thesaasbook.com";
+type SubmitState =
+  | { kind: "idle" }
+  | { kind: "submitting" }
+  | { kind: "success"; message: string }
+  | { kind: "error"; message: string };
 
-function buildMailtoUrl(name: string, email: string, message: string) {
-  const subject = `Contact from ${name}`;
-  const body = [`Name: ${name}`, `Email: ${email}`, "", "Message:", message].join("\n");
-
-  return `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
+const initialState: SubmitState = { kind: "idle" };
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
+  const [submitState, setSubmitState] = useState<SubmitState>(initialState);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    window.location.href = buildMailtoUrl(name.trim(), email.trim(), message.trim());
+    setSubmitState({ kind: "submitting" });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+          website: website.trim(),
+        }),
+      });
+
+      const data = (await response.json()) as { message?: string };
+
+      if (!response.ok) {
+        throw new Error(data.message || "We could not send your message right now. Please try again.");
+      }
+
+      setName("");
+      setEmail("");
+      setMessage("");
+      setWebsite("");
+      setSubmitState({
+        kind: "success",
+        message: data.message || "Your message was sent successfully. We’ll get back to you soon.",
+      });
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "We could not send your message right now. Please try again.";
+
+      setSubmitState({ kind: "error", message });
+    }
   };
 
   return (
@@ -74,15 +112,37 @@ export default function ContactForm() {
         />
       </div>
 
-      <p className="text-sm leading-6 text-slate-500">
-        Clicking send opens your default email app with your message prefilled.
-      </p>
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(event) => setWebsite(event.target.value)}
+        />
+      </div>
+
+      {submitState.kind === "success" ? (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900">
+          {submitState.message}
+        </div>
+      ) : null}
+
+      {submitState.kind === "error" ? (
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-900">
+          {submitState.message}
+        </div>
+      ) : null}
 
       <button
         type="submit"
-        className="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200"
+        disabled={submitState.kind === "submitting"}
+        className="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200"
       >
-        Send Message
+        {submitState.kind === "submitting" ? "Sending..." : "Send Message"}
       </button>
     </form>
   );
