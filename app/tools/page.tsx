@@ -162,7 +162,7 @@ export default function ToolsPage() {
                 SEO Tools
               </h2>
               <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
-                Test crawl directives, generate XML sitemaps, and validate whether important SEO resources are accessible to search bots.
+                Test crawl directives, generate XML sitemaps, and scan websites for broken links, redirects, and crawl blockers.
               </p>
             </div>
           </div>

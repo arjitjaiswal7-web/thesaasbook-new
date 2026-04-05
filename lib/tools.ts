@@ -51,7 +51,7 @@ export const tools: Tool[] = [
     status: "live",
     featured: false,
     href: "/tools/seo-tools/robots-txt-tester",
-    relatedSlugs: ["xml-sitemap-generator"],
+    relatedSlugs: ["xml-sitemap-generator", "broken-link-checker"],
     howToSteps: [
       "Enter the full URL you want to test.",
       "Choose the crawler user-agent you want to simulate.",
@@ -69,12 +69,30 @@ export const tools: Tool[] = [
     status: "live",
     featured: false,
     href: "/tools/seo-tools/xml-sitemap-generator",
-    relatedSlugs: ["robots-txt-tester"],
+    relatedSlugs: ["robots-txt-tester", "broken-link-checker"],
     howToSteps: [
       "Paste URLs directly or upload a TXT, CSV, JSON, or XML file.",
       "Set the default last modified date, change frequency, and priority.",
       "Review or edit each URL entry before export.",
       "Generate and download the final sitemap.xml file.",
+    ],
+  },
+  {
+    slug: "broken-link-checker",
+    name: "Broken Link Checker",
+    categoryLabel: "SEO Tools",
+    group: "seo-tools",
+    description: "Scan websites for broken links, crawler-blocked URLs, and timeout issues with source-page reporting.",
+    icon: "fileText",
+    status: "live",
+    featured: false,
+    href: "/tools/seo-tools/broken-link-checker",
+    relatedSlugs: ["robots-txt-tester", "xml-sitemap-generator"],
+    howToSteps: [
+      "Enter the website URL you want to scan.",
+      "Start the crawler and let it discover internal pages automatically.",
+      "Review grouped issue links only: broken URLs, crawler-blocked URLs, timeout issues, source pages, and response times.",
+      "Filter the results and export the full report as CSV.",
     ],
   },
   {
@@ -396,6 +414,33 @@ export const imageTools = tools.filter((tool) => tool.group === "image-tools");
 export const seoTools = tools.filter((tool) => tool.group === "seo-tools");
 
 const toolFaqsBySlug: Record<string, ToolFaq[]> = {
+  "broken-link-checker": [
+    {
+      question: "What does the Broken Link Checker do?",
+      answer:
+        "It crawls a website, checks internal and external links, and reports issue links only: broken URLs, crawler-blocked responses, timeout issues, source pages, anchor text, and response times in one free report.",
+    },
+    {
+      question: "Does the Broken Link Checker scan the whole website?",
+      answer:
+        "Yes. The tool recursively crawls internal links on the same domain and keeps scanning until it reaches the configured crawl depth or no new pages are discovered.",
+    },
+    {
+      question: "Can I export the issue link results?",
+      answer:
+        "Yes. You can export the grouped issue results as a CSV report and copy the filtered results directly from the interface with no login required.",
+    },
+    {
+      question: "Does the report show where an issue link was found?",
+      answer:
+        "Yes. Every result includes the source page and anchor text so you can quickly locate the problem on the correct page.",
+    },
+    {
+      question: "Is the Broken Link Checker safe to use?",
+      answer:
+        "Yes. The tool blocks local and private hosts, stays inside the target domain for crawling, and only scans public URLs that you provide.",
+    },
+  ],
   "robots-txt-tester": [
     {
       question: "What does the Robots.txt Tester do?",

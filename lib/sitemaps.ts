@@ -93,6 +93,7 @@ const toolComponentBySlug: Record<string, string> = {
   "image-cropper": "components/tools/ImageCropperTool.tsx",
   "robots-txt-tester": "components/tools/RobotsTxtTesterTool.tsx",
   "xml-sitemap-generator": "components/tools/XmlSitemapGeneratorTool.tsx",
+  "broken-link-checker": "components/tools/BrokenLinkCheckerTool.tsx",
 };
 
 function escapeXml(value: string) {
@@ -188,8 +189,11 @@ export async function getToolsSitemapEntries(): Promise<SitemapEntry[]> {
     "app/tools/image-tools/image-cropper/page.tsx",
     "app/tools/seo-tools/robots-txt-tester/page.tsx",
     "app/tools/seo-tools/xml-sitemap-generator/page.tsx",
+    "app/tools/seo-tools/broken-link-checker/page.tsx",
     "app/api/seo/robots-txt-tester/route.ts",
+    "app/api/scan/route.ts",
     "lib/robots-txt.ts",
+    "lib/broken-link-checker.ts",
     "components/ToolPageTemplate.tsx",
     "lib/tools.ts",
   ];

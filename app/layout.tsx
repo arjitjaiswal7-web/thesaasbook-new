@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import Footer from "@/components/Footer";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import Header from "@/components/Header";
 import JsonLd from "@/components/JsonLd";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
@@ -20,6 +21,8 @@ const geistMono = Geist_Mono({
 });
 
 const defaultTitle = "Free Online Tools for SaaS Founders & Marketers";
+const googleAnalyticsMeasurementId =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-JCSGY4WYHN";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -100,6 +103,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} bg-slate-50 text-slate-950 antialiased`}
       >
+        <GoogleAnalytics measurementId={googleAnalyticsMeasurementId} />
         <div className="relative isolate flex min-h-screen flex-col overflow-x-clip">
           <div className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[38rem] bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_38%),radial-gradient(circle_at_18%_18%,_rgba(15,23,42,0.06),_transparent_24%),linear-gradient(180deg,_#ffffff_0%,_#f8fafc_52%,_#f8fafc_100%)]" />
           <Header />
