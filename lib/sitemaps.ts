@@ -33,6 +33,7 @@ type StaticRouteConfig = {
   priority: number;
 };
 
+const SITE_LAST_MODIFIED = "2026-04-05T00:00:00.000Z";
 const PROJECT_ROOT = process.cwd();
 
 const pageRoutes: StaticRouteConfig[] = [
@@ -120,15 +121,8 @@ function ensureWwwUrl(value: string) {
 }
 
 async function getLastModified(...sources: string[]) {
-  const timestamps = await Promise.all(
-    sources.map(async (source) => {
-      const filePath = path.join(PROJECT_ROOT, source);
-      const stats = await fs.stat(filePath);
-      return stats.mtime.getTime();
-    }),
-  );
-
-  return new Date(Math.max(...timestamps)).toISOString();
+  void sources;
+  return SITE_LAST_MODIFIED;
 }
 
 export function buildSitemapXml(entries: SitemapEntry[]) {
@@ -277,12 +271,9 @@ export async function getBlogSitemapEntries(): Promise<SitemapEntry[]> {
       )
     : Date.now();
 
-  const blogIndexLastModified = new Date(
-    Math.max(
-      latestPostModified,
-      new Date(await getLastModified("app/blog/page.tsx", "lib/blog.ts")).getTime(),
-    ),
-  ).toISOString();
+  void latestPostModified;
+
+  const blogIndexLastModified = SITE_LAST_MODIFIED;
 
   const postEntries = await Promise.all(
     posts.map(async (post) => ({

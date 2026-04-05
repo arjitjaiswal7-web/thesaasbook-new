@@ -120,6 +120,10 @@ export default function TermsAndConditionsPage() {
         </h1>
         <div className="mt-6 space-y-3 text-sm leading-7 text-slate-500 sm:text-base">
           <p>
+            <span className="font-semibold text-slate-700">Last Updated:</span>{" "}
+            5 April 2026
+          </p>
+          <p>
             <span className="font-semibold text-slate-700">Effective Date:</span>{" "}
             15 March 2026
           </p>

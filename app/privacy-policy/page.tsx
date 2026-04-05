@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
           Privacy Policy
         </h1>
         <p className="mt-4 text-sm font-medium uppercase tracking-[0.16em] text-slate-500">
-          Last Updated: March 2026
+          Last Updated: April 5, 2026
         </p>
         <div className="mt-6 space-y-5 text-base leading-7 text-slate-600 sm:text-lg">
           <p>
