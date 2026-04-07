@@ -100,6 +100,28 @@ export default function PdfToolsPage() {
             <ToolCard key={tool.slug} tool={tool} />
           ))}
         </section>
+
+        <section className="mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 sm:p-8">
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+            Browse every PDF tool
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+            Explore each dedicated PDF workflow below, including merge, split, edit, compression, and conversion tools.
+          </p>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {pdfTools.map((tool) => (
+              <div key={tool.slug} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+                <h3 className="text-lg font-semibold text-slate-950">
+                  <a href={tool.href} className="transition hover:text-sky-700">
+                    {tool.name}
+                  </a>
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{tool.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </>
   );

@@ -9,7 +9,7 @@ import {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 const activeScansByIp = new Map<string, number>();
 

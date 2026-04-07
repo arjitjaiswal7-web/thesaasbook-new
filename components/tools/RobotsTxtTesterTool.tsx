@@ -59,7 +59,7 @@ const userAgents = [
 ];
 
 export default function RobotsTxtTesterTool() {
-  const [url, setUrl] = useState("https://www.thesaasbook.com/blog");
+  const [url, setUrl] = useState("");
   const [userAgent, setUserAgent] = useState("Googlebot");
   const [checkResources, setCheckResources] = useState(true);
   const [useCustomRules, setUseCustomRules] = useState(false);
@@ -117,7 +117,7 @@ export default function RobotsTxtTesterTool() {
                 type="url"
                 value={url}
                 onChange={(event) => setUrl(event.target.value)}
-                placeholder="https://example.com/path"
+                placeholder="Enter a URL to test, e.g. https://example.com/path"
                 className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900"
                 required
               />

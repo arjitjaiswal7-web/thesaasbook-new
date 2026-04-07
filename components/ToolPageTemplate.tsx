@@ -18,6 +18,7 @@ type ToolPageTemplateProps = {
   toolGroupLabel?: string;
   toolGroupHref?: string;
   relatedToolsTitle?: string;
+  detailsSection?: React.ReactNode;
 };
 
 export default function ToolPageTemplate({
@@ -31,6 +32,7 @@ export default function ToolPageTemplate({
   toolGroupLabel = "PDF Tools",
   toolGroupHref = "/tools/pdf-tools",
   relatedToolsTitle,
+  detailsSection,
 }: ToolPageTemplateProps) {
   const Icon = toolIconMap[tool.icon];
 
@@ -131,6 +133,8 @@ export default function ToolPageTemplate({
           </div>
         </div>
       </section>
+
+      {detailsSection ? <div className="mt-10">{detailsSection}</div> : null}
 
       <RelatedTools
         tools={relatedTools}

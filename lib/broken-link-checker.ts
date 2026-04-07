@@ -7,9 +7,9 @@ import pLimit from "p-limit";
 import isURL from "validator/lib/isURL";
 
 const REQUEST_TIMEOUT_MS = 7_000;
-const PAGE_CONCURRENCY = 4;
-const LINK_CONCURRENCY = 6;
-const BATCH_DELAY_MS = 150;
+const PAGE_CONCURRENCY = 5;
+const LINK_CONCURRENCY = 10;
+const BATCH_DELAY_MS = 100;
 const MAX_DEPTH = 4;
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
@@ -45,13 +45,13 @@ export type GroupedLinkResult = {
 export type BrokenLinkScanResponse = {
   url: string;
   totalLinks: number;
+  uniqueLinks: number;
   brokenLinks: number;
   blockedLinks: number;
   timeoutLinks: number;
   scannedPages: number;
   discoveredPages: number;
   groupedResults: GroupedLinkResult[];
-  warnings: string[];
   maxDepth: number;
   startedAt: string;
   finishedAt: string;
@@ -62,13 +62,14 @@ export type BrokenLinkScanProgress = {
   phase: string;
   currentUrl: string | null;
   totalLinks: number;
+  uniqueLinks: number;
+  checkedLinks: number;
   brokenLinks: number;
   blockedLinks: number;
   timeoutLinks: number;
   scannedPages: number;
   discoveredPages: number;
   newResults: GroupedLinkResult[];
-  warnings: string[];
 };
 
 type PageQueueItem = {
@@ -623,7 +624,6 @@ export async function runBrokenLinkScan(
   const rootOrigin = normalizeUrlString(rootUrl.origin) ?? rootUrl.origin;
   const rootComparableHost = getComparableHostname(rootUrl.hostname);
   const hostSafetyCache = new Map<string, boolean>();
-  const warnings = new Set<string>();
   const startedAt = new Date().toISOString();
   const rootPageKey = normalizeComparableUrl(normalizedUrl) ?? normalizedUrl;
 
@@ -641,13 +641,14 @@ export async function runBrokenLinkScan(
     phase: "Preparing crawl",
     currentUrl: normalizedUrl,
     totalLinks: 0,
+    uniqueLinks: 0,
+    checkedLinks: 0,
     brokenLinks: 0,
     blockedLinks: 0,
     timeoutLinks: 0,
     scannedPages,
     discoveredPages,
     newResults: [],
-    warnings: [],
   });
 
   while (pageQueue.length) {
@@ -667,7 +668,6 @@ export async function runBrokenLinkScan(
             seenPages.add(normalizedFinalPageKey);
 
             if (response.status >= 400) {
-              warnings.add(`Skipped ${page.url} because it returned ${response.status}.`);
               return;
             }
 
@@ -712,9 +712,7 @@ export async function runBrokenLinkScan(
             });
           } catch (error) {
             scannedPages += 1;
-            warnings.add(
-              `Could not crawl ${page.url}: ${error instanceof Error ? error.message : "Request failed."}`,
-            );
+            void error;
           }
         }),
       ),
@@ -724,14 +722,15 @@ export async function runBrokenLinkScan(
       progress: Math.min(55, Math.round((scannedPages / Math.max(discoveredPages, 1)) * 55)),
       phase: `Crawled ${scannedPages} of ${discoveredPages} discovered pages`,
       currentUrl: batch[batch.length - 1]?.url ?? null,
-      totalLinks: linkAggregates.size,
+      totalLinks: 0,
+      uniqueLinks: linkAggregates.size,
+      checkedLinks: 0,
       brokenLinks: 0,
       blockedLinks: 0,
       timeoutLinks: 0,
       scannedPages,
       discoveredPages,
       newResults: [],
-      warnings: Array.from(warnings),
     });
 
     if (pageQueue.length) {
@@ -769,13 +768,14 @@ export async function runBrokenLinkScan(
       phase: `Checked ${Math.min(index + batch.length, uniqueLinks.length)} of ${uniqueLinks.length} unique links`,
       currentUrl: batch[batch.length - 1]?.url ?? null,
       totalLinks: groupedResults.length,
+      uniqueLinks: uniqueLinks.length,
+      checkedLinks: Math.min(index + batch.length, uniqueLinks.length),
       brokenLinks,
       blockedLinks,
       timeoutLinks,
       scannedPages,
       discoveredPages,
       newResults: issueBatch.sort(sortResults),
-      warnings: Array.from(warnings),
     });
 
     if (index + LINK_CONCURRENCY < uniqueLinks.length) {
@@ -788,13 +788,13 @@ export async function runBrokenLinkScan(
   return {
     url: rootOrigin,
     totalLinks: groupedResults.length,
+    uniqueLinks: uniqueLinks.length,
     brokenLinks,
     blockedLinks,
     timeoutLinks,
     scannedPages,
     discoveredPages,
     groupedResults: groupedResults.sort(sortResults),
-    warnings: Array.from(warnings),
     maxDepth: MAX_DEPTH,
     startedAt,
     finishedAt,

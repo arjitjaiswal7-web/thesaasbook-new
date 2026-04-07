@@ -7,6 +7,156 @@ import PdfToolWorkspace from "@/components/tools/PdfToolWorkspace";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
 import { getPdfToolBySlug, getRelatedTools, getToolFaqs, pdfTools } from "@/lib/tools";
 
+const toolDetailContent: Record<
+  string,
+  {
+    intro: string;
+    highlights: string[];
+    useCases: string[];
+  }
+> = {
+  "merge-pdf": {
+    intro:
+      "Merge PDF is built for situations where multiple files need to become one clean document without reformatting pages by hand.",
+    highlights: [
+      "Combine contracts, reports, invoices, or supporting documents into a single shareable PDF.",
+      "Keep the original page order under your control before export.",
+      "Avoid re-saving pages manually in desktop software just to create one final file.",
+    ],
+    useCases: [
+      "Sending one complete proposal instead of several attachments.",
+      "Preparing signed PDFs and appendices for clients or legal review.",
+      "Bundling monthly reports into one downloadable archive document.",
+    ],
+  },
+  "split-pdf": {
+    intro:
+      "Split PDF is useful when one large file contains only a few pages you actually need to reuse, share, or archive separately.",
+    highlights: [
+      "Extract exact pages or ranges without rebuilding the document from scratch.",
+      "Create smaller PDFs that are easier to email, review, or store.",
+      "Keep the original page quality and layout while removing unnecessary pages.",
+    ],
+    useCases: [
+      "Sharing only the relevant chapter, invoice, or appendix from a large PDF.",
+      "Creating one file per page for approvals or signatures.",
+      "Separating mixed-source scans into smaller documents for team workflows.",
+    ],
+  },
+  "edit-pdf": {
+    intro:
+      "Edit PDF focuses on quick browser-based content adjustments when you need a revised-looking PDF without opening heavier desktop software.",
+    highlights: [
+      "Overlay updated text on top of detected PDF lines directly in the browser.",
+      "Add new text boxes where the original document needs a visible revision.",
+      "Export a revised PDF that keeps the page layout visually consistent.",
+    ],
+    useCases: [
+      "Correcting names, labels, or visible text in a finalized PDF.",
+      "Updating a quote, proposal, or form before resending it.",
+      "Making fast content edits when the source file is no longer available.",
+    ],
+  },
+  "compress-pdf": {
+    intro:
+      "Compress PDF helps reduce oversized documents so they are easier to upload, share, and attach while staying readable.",
+    highlights: [
+      "Lower PDF file size for portals, forms, and email attachments.",
+      "Choose a compression level based on how much size reduction you need.",
+      "Handle large image-heavy PDFs entirely in the browser.",
+    ],
+    useCases: [
+      "Submitting PDFs to websites with strict upload limits.",
+      "Reducing document weight before emailing clients or teams.",
+      "Optimizing scanned files for faster downloads and storage.",
+    ],
+  },
+  "jpg-to-pdf": {
+    intro:
+      "JPG to PDF converts scattered images into one document, which is often easier to print, share, and archive than separate files.",
+    highlights: [
+      "Combine one or many JPG images into a single PDF document.",
+      "Control image order before export so pages appear correctly.",
+      "Create cleaner, more professional files from screenshots or photo scans.",
+    ],
+    useCases: [
+      "Turning scanned pages or photographed documents into one PDF.",
+      "Sending receipts, proofs, or image-based forms in document format.",
+      "Creating printable PDFs from image sets for operations or admin work.",
+    ],
+  },
+  "pdf-to-word": {
+    intro:
+      "PDF to Word is meant for text-based PDFs that need rewriting, updating, or reuse in an editable document format.",
+    highlights: [
+      "Extract editable text from PDF files into a Word document.",
+      "Reduce the manual copy-paste work required to revise old PDFs.",
+      "Preserve enough structure to make follow-up editing faster.",
+    ],
+    useCases: [
+      "Updating contracts, proposals, or internal documents from existing PDFs.",
+      "Reusing text from report PDFs in editable office workflows.",
+      "Making content revisions when only the exported PDF is available.",
+    ],
+  },
+  "word-to-pdf": {
+    intro:
+      "Word to PDF is designed for turning editable .docx files into stable PDFs that look consistent across devices and recipients.",
+    highlights: [
+      "Convert Word documents into a fixed-layout PDF for sharing.",
+      "Keep the output easier to print and distribute than editable source files.",
+      "Generate browser-side PDFs without needing office software on the device.",
+    ],
+    useCases: [
+      "Sending resumes, proposals, or client documents in final format.",
+      "Publishing internal documents that should not be casually edited.",
+      "Creating stable document outputs for review and sign-off.",
+    ],
+  },
+  "pdf-to-jpg": {
+    intro:
+      "PDF to JPG is useful when a PDF page needs to become an image for slides, web uploads, previews, or sharing in visual form.",
+    highlights: [
+      "Export selected PDF pages as image files instead of documents.",
+      "Choose page ranges and quality for the output you need.",
+      "Make PDF content easier to drop into websites, presentations, or chats.",
+    ],
+    useCases: [
+      "Turning brochure pages or reports into presentation visuals.",
+      "Sharing a document page quickly as an image preview.",
+      "Using PDF content inside design, ad, or CMS workflows.",
+    ],
+  },
+  "pdf-to-excel": {
+    intro:
+      "PDF to Excel is built for table-heavy PDFs where the goal is to move structured data into a spreadsheet for sorting, cleanup, or analysis.",
+    highlights: [
+      "Convert table-like PDF content into editable spreadsheet rows.",
+      "Choose page ranges and workbook structure before export.",
+      "Reduce manual spreadsheet entry when source data is locked in a PDF.",
+    ],
+    useCases: [
+      "Extracting invoice, report, or statement tables into Excel.",
+      "Preparing spreadsheet data from client PDFs for analysis.",
+      "Moving operational or financial tables into editable workflows.",
+    ],
+  },
+  "pdf-to-powerpoint": {
+    intro:
+      "PDF to PowerPoint is aimed at turning presentation-like PDFs into a deck format that is easier to present, reuse, or adapt slide by slide.",
+    highlights: [
+      "Convert PDF pages into a PowerPoint deck with one page per slide.",
+      "Keep the original visual structure close to the source document.",
+      "Reuse PDF-based content in meeting, sales, or reporting workflows.",
+    ],
+    useCases: [
+      "Rebuilding a presentation when only the PDF export remains.",
+      "Using PDF-based pitch decks inside PowerPoint workflows.",
+      "Turning document pages into presentation-ready slides quickly.",
+    ],
+  },
+};
+
 type ToolPageProps = {
   params: Promise<{
     slug: string;
@@ -105,6 +255,10 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   return {
     title: meta?.title ?? tool.name,
     description: meta?.description ?? tool.description,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: absoluteUrl(tool.href),
     },
@@ -165,12 +319,14 @@ export default async function ToolDetailPage({ params }: ToolPageProps) {
 
   const appSchema = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": "SoftwareApplication",
     name: tool.name,
     description: tool.description,
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     url: absoluteUrl(tool.href),
+    isAccessibleForFree: true,
+    featureList: toolDetailContent[tool.slug]?.highlights ?? tool.howToSteps,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -242,6 +398,44 @@ export default async function ToolDetailPage({ params }: ToolPageProps) {
         : undefined;
 
   const overviewDescription = toolOverviewDescriptions[tool.slug];
+  const detailContent = toolDetailContent[tool.slug];
+
+  const detailsSection = detailContent ? (
+    <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 sm:p-8">
+      <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+        What this {tool.name.toLowerCase()} tool helps you do
+      </h2>
+      <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
+        {detailContent.intro}
+      </p>
+
+      <div className="mt-6 grid gap-5 lg:grid-cols-2">
+        <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+          <h3 className="text-lg font-semibold text-slate-950">Key benefits</h3>
+          <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-700">
+            {detailContent.highlights.map((item) => (
+              <li key={item} className="flex gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-sky-600" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+          <h3 className="text-lg font-semibold text-slate-950">Common use cases</h3>
+          <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-700">
+            {detailContent.useCases.map((item) => (
+              <li key={item} className="flex gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-slate-950" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ) : undefined;
 
   return (
     <>
@@ -251,6 +445,7 @@ export default async function ToolDetailPage({ params }: ToolPageProps) {
         relatedTools={getRelatedTools(tool.slug)}
         faqs={faqs}
         overviewDescription={overviewDescription}
+        detailsSection={detailsSection}
         workspace={workspace}
         workspaceTitle={workspaceTitle}
         workspaceDescription={workspaceDescription}

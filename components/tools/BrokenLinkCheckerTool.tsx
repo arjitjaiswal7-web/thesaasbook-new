@@ -30,13 +30,13 @@ type GroupedLinkResult = {
 type BrokenLinkScanResponse = {
   url: string;
   totalLinks: number;
+  uniqueLinks: number;
   brokenLinks: number;
   blockedLinks: number;
   timeoutLinks: number;
   scannedPages: number;
   discoveredPages: number;
   groupedResults: GroupedLinkResult[];
-  warnings: string[];
   maxDepth: number;
   startedAt: string;
   finishedAt: string;
@@ -47,13 +47,14 @@ type BrokenLinkScanProgress = {
   phase: string;
   currentUrl: string | null;
   totalLinks: number;
+  uniqueLinks: number;
+  checkedLinks: number;
   brokenLinks: number;
   blockedLinks: number;
   timeoutLinks: number;
   scannedPages: number;
   discoveredPages: number;
   newResults: GroupedLinkResult[];
-  warnings: string[];
 };
 
 type StreamEvent =
@@ -150,17 +151,17 @@ function downloadCsv(content: string, fileName: string) {
 export default function BrokenLinkCheckerTool() {
   const [url, setUrl] = useState("");
   const [groupedResults, setGroupedResults] = useState<GroupedLinkResult[]>([]);
-  const [warnings, setWarnings] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState("Ready to scan");
   const [currentUrl, setCurrentUrl] = useState<string | null>(null);
-  const [totalLinks, setTotalLinks] = useState(0);
+  const [issueLinks, setIssueLinks] = useState(0);
+  const [uniqueLinks, setUniqueLinks] = useState(0);
+  const [checkedLinks, setCheckedLinks] = useState(0);
   const [brokenLinks, setBrokenLinks] = useState(0);
   const [blockedLinks, setBlockedLinks] = useState(0);
   const [timeoutLinks, setTimeoutLinks] = useState(0);
   const [scannedPages, setScannedPages] = useState(0);
   const [discoveredPages, setDiscoveredPages] = useState(0);
-  const [maxDepth, setMaxDepth] = useState<number | null>(null);
   const [startedAt, setStartedAt] = useState<string | null>(null);
   const [finishedAt, setFinishedAt] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<"all" | "broken" | "blocked" | "timeout">("all");
@@ -182,11 +183,12 @@ export default function BrokenLinkCheckerTool() {
     setError(null);
     setCopied(false);
     setGroupedResults([]);
-    setWarnings([]);
     setProgress(0);
     setPhase("Starting scan");
     setCurrentUrl(null);
-    setTotalLinks(0);
+    setIssueLinks(0);
+    setUniqueLinks(0);
+    setCheckedLinks(0);
     setBrokenLinks(0);
     setBlockedLinks(0);
     setTimeoutLinks(0);
@@ -194,7 +196,6 @@ export default function BrokenLinkCheckerTool() {
     setDiscoveredPages(0);
     setStartedAt(new Date().toISOString());
     setFinishedAt(null);
-    setMaxDepth(null);
 
     try {
       const response = await fetch("/api/scan", {
@@ -241,13 +242,14 @@ export default function BrokenLinkCheckerTool() {
             setProgress(eventPayload.payload.progress);
             setPhase(eventPayload.payload.phase);
             setCurrentUrl(eventPayload.payload.currentUrl);
-            setTotalLinks(eventPayload.payload.totalLinks);
+            setIssueLinks(eventPayload.payload.totalLinks);
+            setUniqueLinks(eventPayload.payload.uniqueLinks);
+            setCheckedLinks(eventPayload.payload.checkedLinks);
             setBrokenLinks(eventPayload.payload.brokenLinks);
             setBlockedLinks(eventPayload.payload.blockedLinks);
             setTimeoutLinks(eventPayload.payload.timeoutLinks);
             setScannedPages(eventPayload.payload.scannedPages);
             setDiscoveredPages(eventPayload.payload.discoveredPages);
-            setWarnings(eventPayload.payload.warnings);
 
             if (eventPayload.payload.newResults.length) {
               setGroupedResults((current) =>
@@ -261,14 +263,14 @@ export default function BrokenLinkCheckerTool() {
             setPhase("Scan complete");
             setCurrentUrl(null);
             setGroupedResults(eventPayload.payload.groupedResults);
-            setWarnings(eventPayload.payload.warnings);
-            setTotalLinks(eventPayload.payload.totalLinks);
+            setIssueLinks(eventPayload.payload.totalLinks);
+            setUniqueLinks(eventPayload.payload.uniqueLinks);
+            setCheckedLinks(eventPayload.payload.uniqueLinks);
             setBrokenLinks(eventPayload.payload.brokenLinks);
             setBlockedLinks(eventPayload.payload.blockedLinks);
             setTimeoutLinks(eventPayload.payload.timeoutLinks);
             setScannedPages(eventPayload.payload.scannedPages);
             setDiscoveredPages(eventPayload.payload.discoveredPages);
-            setMaxDepth(eventPayload.payload.maxDepth);
             setStartedAt(eventPayload.payload.startedAt);
             setFinishedAt(eventPayload.payload.finishedAt);
           }
@@ -364,10 +366,10 @@ export default function BrokenLinkCheckerTool() {
             <span className="font-semibold text-slate-950">Discovered pages:</span> {discoveredPages}
           </div>
           <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-            <span className="font-semibold text-slate-950">Unique links:</span> {totalLinks}
+            <span className="font-semibold text-slate-950">Unique links:</span> {uniqueLinks}
           </div>
           <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-            <span className="font-semibold text-slate-950">Max crawl depth:</span> {maxDepth ?? 4}
+            <span className="font-semibold text-slate-950">Checked links:</span> {checkedLinks}
           </div>
         </div>
         {currentUrl ? (
@@ -410,20 +412,9 @@ export default function BrokenLinkCheckerTool() {
             <Search className="h-5 w-5" aria-hidden="true" />
           </span>
           <h3 className="mt-4 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Issue Links</h3>
-          <p className="mt-2 text-3xl font-semibold text-slate-950">{totalLinks}</p>
+          <p className="mt-2 text-3xl font-semibold text-slate-950">{issueLinks}</p>
         </article>
       </div>
-
-      {warnings.length ? (
-        <section className="rounded-[1.5rem] border border-amber-200 bg-amber-50 p-5 shadow-sm shadow-amber-100/60">
-          <h2 className="text-lg font-semibold text-amber-950">Scan warnings</h2>
-          <ul className="mt-3 space-y-2 text-sm text-amber-900">
-            {warnings.map((warning) => (
-              <li key={warning}>{warning}</li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
 
       <section className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
