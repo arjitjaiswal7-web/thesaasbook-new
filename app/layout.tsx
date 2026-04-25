@@ -24,6 +24,7 @@ const geistMono = Geist_Mono({
 const defaultTitle = "Free Online Tools for SaaS Founders & Marketers";
 const googleAnalyticsMeasurementId =
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-JCSGY4WYHN";
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -62,6 +63,11 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   category: "technology",
+  verification: googleSiteVerification
+    ? {
+        google: googleSiteVerification,
+      }
+    : undefined,
   robots: {
     index: true,
     follow: true,

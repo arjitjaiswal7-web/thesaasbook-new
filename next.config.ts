@@ -48,9 +48,31 @@ const nextConfig: NextConfig = {
     ];
 
     if (process.env.NODE_ENV === "production") {
+      const contentSecurityPolicy = [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "form-action 'self' https://www.thesaasbook.com https://thesaasbook.com",
+        "frame-ancestors 'self'",
+        "object-src 'none'",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+        "img-src 'self' data: blob: https:",
+        "font-src 'self' data: https://fonts.gstatic.com",
+        "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.google-analytics.com https://*.google-analytics.com",
+        "frame-src 'self' https:",
+        "worker-src 'self' blob:",
+        "media-src 'self' data: blob:",
+        "manifest-src 'self'",
+        "upgrade-insecure-requests",
+      ].join("; ");
+
       securityHeaders.push({
         key: "Strict-Transport-Security",
         value: "max-age=63072000; includeSubDomains; preload",
+      });
+      securityHeaders.push({
+        key: "Content-Security-Policy",
+        value: contentSecurityPolicy,
       });
     }
 

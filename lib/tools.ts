@@ -51,12 +51,39 @@ export const tools: Tool[] = [
     status: "live",
     featured: false,
     href: "/tools/seo-tools/robots-txt-tester",
-    relatedSlugs: ["xml-sitemap-generator", "broken-link-checker"],
+    relatedSlugs: [
+      "schema-markup-generator",
+      "xml-sitemap-generator",
+      "broken-link-checker",
+    ],
     howToSteps: [
       "Enter the full URL you want to test.",
       "Choose the crawler user-agent you want to simulate.",
       "Optionally paste custom robots.txt rules or enable resource checks.",
       "Run the test and review the matched rule, crawl status, and linked resources.",
+    ],
+  },
+  {
+    slug: "schema-markup-generator",
+    name: "Schema Markup Generator",
+    categoryLabel: "SEO Tools",
+    group: "seo-tools",
+    description:
+      "Generate JSON-LD schema markup with live preview, validation, and URL-based autofill.",
+    icon: "fileText",
+    status: "live",
+    featured: false,
+    href: "/tools/seo-tools/schema-markup-generator",
+    relatedSlugs: [
+      "robots-txt-tester",
+      "xml-sitemap-generator",
+      "broken-link-checker",
+    ],
+    howToSteps: [
+      "Choose the schema type you want to create.",
+      "Optionally enter a live page URL to auto-fill suggested fields.",
+      "Review the validation checker and complete any missing required fields.",
+      "Copy the JSON-LD, download it, or open Rich Results Test to validate the final markup.",
     ],
   },
   {
@@ -69,7 +96,11 @@ export const tools: Tool[] = [
     status: "live",
     featured: false,
     href: "/tools/seo-tools/xml-sitemap-generator",
-    relatedSlugs: ["robots-txt-tester", "broken-link-checker"],
+    relatedSlugs: [
+      "schema-markup-generator",
+      "robots-txt-tester",
+      "broken-link-checker",
+    ],
     howToSteps: [
       "Paste URLs directly or upload a TXT, CSV, JSON, or XML file.",
       "Set the default last modified date, change frequency, and priority.",
@@ -87,7 +118,11 @@ export const tools: Tool[] = [
     status: "live",
     featured: false,
     href: "/tools/seo-tools/broken-link-checker",
-    relatedSlugs: ["robots-txt-tester", "xml-sitemap-generator"],
+    relatedSlugs: [
+      "schema-markup-generator",
+      "robots-txt-tester",
+      "xml-sitemap-generator",
+    ],
     howToSteps: [
       "Enter the website URL you want to scan.",
       "Start the crawler and let it discover internal pages automatically.",
@@ -414,6 +449,33 @@ export const imageTools = tools.filter((tool) => tool.group === "image-tools");
 export const seoTools = tools.filter((tool) => tool.group === "seo-tools");
 
 const toolFaqsBySlug: Record<string, ToolFaq[]> = {
+  "schema-markup-generator": [
+    {
+      question: "What does the Schema Markup Generator do?",
+      answer:
+        "It creates JSON-LD schema markup for common Schema.org types such as Article, FAQPage, Organization, WebSite, Product, LocalBusiness, and BreadcrumbList. You can preview the output live and copy or download it once the fields are ready.",
+    },
+    {
+      question: "Can I auto-fill schema fields from a live page URL?",
+      answer:
+        "Yes. Enter a public page URL and the generator will try to pull suggested fields from existing JSON-LD, page metadata, and other high-confidence signals on the page.",
+    },
+    {
+      question: "Does the tool validate my schema before I publish it?",
+      answer:
+        "Yes. The validation checker highlights missing required fields, recommended improvements, and obvious formatting issues so you can tighten the markup before you add it to a page.",
+    },
+    {
+      question: "Can I test the generated schema in Google?",
+      answer:
+        "Yes. The tool includes a direct Rich Results Test link so you can open Google’s testing workflow right after generating the JSON-LD markup.",
+    },
+    {
+      question: "Is the Schema Markup Generator free to use?",
+      answer:
+        "Yes. The tool is free to use with no login, no credits, and no export restrictions for the generated JSON-LD output.",
+    },
+  ],
   "broken-link-checker": [
     {
       question: "What does the Broken Link Checker do?",

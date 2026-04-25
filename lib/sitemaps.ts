@@ -93,6 +93,7 @@ const toolComponentBySlug: Record<string, string> = {
   "jpg-to-webp": "components/tools/JpgToWebpTool.tsx",
   "image-cropper": "components/tools/ImageCropperTool.tsx",
   "robots-txt-tester": "components/tools/RobotsTxtTesterTool.tsx",
+  "schema-markup-generator": "components/tools/SchemaMarkupGeneratorTool.tsx",
   "xml-sitemap-generator": "components/tools/XmlSitemapGeneratorTool.tsx",
   "broken-link-checker": "components/tools/BrokenLinkCheckerTool.tsx",
 };
@@ -182,12 +183,15 @@ export async function getToolsSitemapEntries(): Promise<SitemapEntry[]> {
     "app/tools/image-tools/jpg-to-webp/page.tsx",
     "app/tools/image-tools/image-cropper/page.tsx",
     "app/tools/seo-tools/robots-txt-tester/page.tsx",
+    "app/tools/seo-tools/schema-markup-generator/page.tsx",
     "app/tools/seo-tools/xml-sitemap-generator/page.tsx",
     "app/tools/seo-tools/broken-link-checker/page.tsx",
     "app/api/seo/robots-txt-tester/route.ts",
+    "app/api/seo/schema-markup-generator/autofill/route.ts",
     "app/api/scan/route.ts",
     "lib/robots-txt.ts",
     "lib/broken-link-checker.ts",
+    "lib/schema-markup.ts",
     "components/ToolPageTemplate.tsx",
     "lib/tools.ts",
   ];

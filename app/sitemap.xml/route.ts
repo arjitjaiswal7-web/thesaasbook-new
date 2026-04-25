@@ -1,6 +1,7 @@
 import { buildSitemapIndexXml, getSitemapIndexEntries } from "@/lib/sitemaps";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
 export async function GET() {
   const entries = await getSitemapIndexEntries();
@@ -8,6 +9,7 @@ export async function GET() {
   return new Response(buildSitemapIndexXml(entries), {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
+      "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
     },
   });
 }

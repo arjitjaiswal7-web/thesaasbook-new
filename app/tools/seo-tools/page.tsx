@@ -9,14 +9,14 @@ import { seoTools } from "@/lib/tools";
 export const metadata: Metadata = {
   title: "SEO Tools - Crawl, Robots & Technical Checks | TheSaaSBook",
   description:
-    "Use SEO tools to test robots.txt rules, generate XML sitemaps, and scan websites for broken links directly in your browser.",
+    "Use SEO tools to test robots.txt rules, generate XML sitemaps, create schema markup, and scan websites for issue links directly in your browser.",
   alternates: {
     canonical: absoluteUrl("/tools/seo-tools"),
   },
   openGraph: {
     title: "SEO Tools - Crawl, Robots & Technical Checks | TheSaaSBook",
     description:
-      "Use SEO tools to test robots.txt rules, generate XML sitemaps, and scan websites for broken links directly in your browser.",
+      "Use SEO tools to test robots.txt rules, generate XML sitemaps, create schema markup, and scan websites for issue links directly in your browser.",
     url: absoluteUrl("/tools/seo-tools"),
     siteName: siteConfig.name,
     locale: siteConfig.locale,
@@ -56,7 +56,7 @@ export default function SeoToolsPage() {
     name: `${siteConfig.name} SEO Tools`,
     url: absoluteUrl("/tools/seo-tools"),
     description:
-      "Use SEO tools to test robots.txt rules, generate XML sitemaps, and scan websites for broken links directly in your browser.",
+      "Use SEO tools to test robots.txt rules, generate XML sitemaps, create schema markup, and scan websites for issue links directly in your browser.",
     mainEntity: {
       "@type": "ItemList",
       itemListElement: seoTools.map((tool, index) => ({
@@ -89,7 +89,7 @@ export default function SeoToolsPage() {
             Technical SEO tools for crawl access and indexing checks
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg">
-            Test crawl directives with Robots.txt Tester, generate ready-to-submit XML sitemaps, and scan websites for broken links with source-page reporting from one focused SEO toolkit.
+            Test crawl directives with Robots.txt Tester, generate ready-to-submit XML sitemaps, build JSON-LD schema markup, and scan websites for issue links from one focused SEO toolkit.
           </p>
         </section>
 
