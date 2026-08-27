@@ -19,6 +19,7 @@ type ToolPageTemplateProps = {
   toolGroupHref?: string;
   relatedToolsTitle?: string;
   detailsSection?: React.ReactNode;
+  showHowToSteps?: boolean;
 };
 
 export default function ToolPageTemplate({
@@ -33,6 +34,7 @@ export default function ToolPageTemplate({
   toolGroupHref = "/tools/pdf-tools",
   relatedToolsTitle,
   detailsSection,
+  showHowToSteps = true,
 }: ToolPageTemplateProps) {
   const Icon = toolIconMap[tool.icon];
 
@@ -116,23 +118,25 @@ export default function ToolPageTemplate({
         )}
       </section>
 
-      <section className="tool-guide mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 sm:p-8">
-        <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
-          How to Use This Tool
-        </h2>
-        <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 sm:p-6">
-          <div className="space-y-4">
-            {tool.howToSteps.map((step, index) => (
-              <div key={step} className="rounded-2xl bg-white p-4 shadow-sm shadow-slate-200/40">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">
-                  Step {index + 1}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-slate-700">{step}</p>
-              </div>
-            ))}
+      {showHowToSteps ? (
+        <section className="tool-guide mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 sm:p-8">
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+            How to Use This Tool
+          </h2>
+          <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 sm:p-6">
+            <div className="space-y-4">
+              {tool.howToSteps.map((step, index) => (
+                <div key={step} className="rounded-2xl bg-white p-4 shadow-sm shadow-slate-200/40">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">
+                    Step {index + 1}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-700">{step}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {detailsSection ? <div className="mt-10">{detailsSection}</div> : null}
 
